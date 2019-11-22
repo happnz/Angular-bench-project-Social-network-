@@ -5,3 +5,11 @@
 .ng-invalid:not(form) {
   border-left: solid 5px #a94442;
 }
+
+form {
+  background: #cffcff;
+  padding: 2rem;
+  border: solid #00f2ff 2px;
+  max-width: 50%;
+  margin: auto;
+}
