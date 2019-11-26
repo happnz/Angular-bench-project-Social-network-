@@ -1,0 +1,17 @@
+<div class="container">
+  <form (ngSubmit)="onSubmit()" #signInForm="ngForm" class="sign-in-form">
+    <div class="form-group">
+      <label for="email-input">Email address</label>
+      <input required type="email" id="email-input" class="form-control" aria-describedby="emailHelp" name="email" [(ngModel)]="model.email">
+    </div>
+    <div class="form-group">
+      <label for="password-input">Password</label>
+      <input required type="password" id="password-input" class="form-control" name="password" [(ngModel)]="model.password">
+    </div>
+    <button type="submit" class="btn btn-primary" [disabled]="!signInForm.form.valid">Sign in</button>
+    <a class="float-right" routerLink="/sign-up">Sign up</a>
+    <div class="mt-1 alert alert-info" *ngIf="this.status === FormStatus.SENDING">Processing...</div>
+    <div class="mt-1 alert alert-success" *ngIf="this.status === FormStatus.SUBMITTED">Success</div>
+    <div class="mt-1 alert alert-danger" *ngIf="this.status === FormStatus.FAILED">Error</div>
+  </form>
+</div>

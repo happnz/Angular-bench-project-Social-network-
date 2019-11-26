@@ -2,7 +2,7 @@
   <form (ngSubmit)="onSubmit()" #signUpForm="ngForm" class="sign-up-form">
   <div class="form-group">
     <label for="email-input">Email address</label>
-    <input required type="email" id="email-input" class="form-control" aria-describedby="emailHelp" name="email"
+    <input required type="email" id="email-input" class="form-control" name="email"
     [(ngModel)]="model.email" #email="ngModel">
     <div [hidden]="email.valid || email.pristine" class="mt-1 alert alert-danger">This is required</div>
   </div>
@@ -29,6 +29,7 @@
     <div [hidden]="lastname.valid || lastname.pristine" class="mt-1 alert alert-danger">This is required</div>
   </div>
   <button type="submit" class="btn btn-primary" [disabled]="!signUpForm.form.valid">Sign up</button>
+  <a class="float-right" routerLink="/sign-in">Sign in</a>
   <div class="mt-1 alert alert-info" *ngIf="this.status === FormStatus.SENDING">Processing...</div>
   <div class="mt-1 alert alert-success" *ngIf="this.status === FormStatus.SUBMITTED">Success</div>
   <div class="mt-1 alert alert-danger" *ngIf="this.status === FormStatus.FAILED">Error</div>

@@ -8,14 +8,14 @@ import {of} from 'rxjs';
 import { FormStatus } from '../shared/FormStatus';
 
 @Component({
-  selector: 'app-sign-up',
-  templateUrl: './sign-up.component.html',
-  styleUrls: ['./sign-up.component.scss']
+  selector: 'app-sign-in',
+  templateUrl: './sign-in.component.html',
+  styleUrls: ['./sign-in.component.css']
 })
-export class SignUpComponent implements OnInit {
-  model: User;
+export class SignInComponent implements OnInit {
+  model: SignInBody;
   apiUrl = environment.apiUrl;
-  path = 'sign-up';
+  path = 'sign-in';
   status: FormStatus = FormStatus.NOT_SUBMITTED;
 
   constructor(
@@ -24,12 +24,13 @@ export class SignUpComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.model = new User('', '', '', '');
+    this.model = new SignInBody('', '');
   }
 
   onSubmit() {
     this.status = FormStatus.SENDING;
     const headers = new HttpHeaders({ 'Content-Type' : 'application/json'});
+    console.log(this.model);
     this.http.post<User>(`${this.apiUrl}/${this.path}`, this.model, {headers})
       .pipe(
         catchError(err => {
@@ -47,5 +48,12 @@ export class SignUpComponent implements OnInit {
 
   get FormStatus() {
     return FormStatus;
+  }
+}
+
+class SignInBody {
+  constructor(public email: string, public password: string) {
+    this.email = email;
+    this.password = password;
   }
 }
