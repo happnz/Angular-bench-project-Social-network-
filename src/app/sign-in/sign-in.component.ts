@@ -41,7 +41,7 @@ export class SignInComponent implements OnInit {
       .subscribe(() => {
         if (this.status !== FormStatus.FAILED) {
           this.status = FormStatus.SUBMITTED;
-          this.router.navigate(['/']);
+          this.router.navigate(['/profile']);
         }
       });
   }
