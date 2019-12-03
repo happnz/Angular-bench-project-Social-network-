@@ -17,6 +17,7 @@ import { AddPostComponent } from './user-profile-page/add-post/add-post.componen
 import { CustomDatePipe } from './custom-date.pipe';
 import { NotificationsComponent } from './user-profile-page/notifications/notifications.component';
 import { NewsComponent } from './news/news.component';
+import { UserMenuComponent } from './user-menu/user-menu.component';
 
 const routes: Routes = [{path: '', pathMatch: 'full', redirectTo: '/sign-in'},
   {path: 'error', component: ErrorPageComponent},
@@ -39,7 +40,8 @@ const routes: Routes = [{path: '', pathMatch: 'full', redirectTo: '/sign-in'},
     AddPostComponent,
     CustomDatePipe,
     NotificationsComponent,
-    NewsComponent
+    NewsComponent,
+    UserMenuComponent
   ],
   imports: [
     BrowserModule,

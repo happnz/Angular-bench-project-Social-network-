@@ -1,5 +1,10 @@
 @import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 
+body {
+  max-width: 70%;
+  margin: auto;
+}
+
 .ng-valid:not(form) {
   border-left: solid 5px #42A948;
 }
