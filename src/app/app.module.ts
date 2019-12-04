@@ -7,20 +7,21 @@ import {FormsModule} from '@angular/forms';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {RouterModule, Routes} from '@angular/router';
 import { SignInComponent } from './sign-in/sign-in.component';
-import { UserProfileComponent } from './user-profile/user-profile.component';
 import {InterceptorService} from './interceptor.service';
+import { UserProfilePageComponent } from './user-profile-page/user-profile-page.component';
 
 const routes: Routes = [{path: '', pathMatch: 'full', redirectTo: '/sign-in'},
   {path: 'sign-up', component: SignUpComponent},
   {path: 'sign-in', component: SignInComponent},
-  {path: 'profile', component: UserProfileComponent}];
+  {path: 'profile', redirectTo: 'profile/'},
+  {path: 'profile/:id', component: UserProfilePageComponent}];
 
 @NgModule({
   declarations: [
     AppComponent,
     SignUpComponent,
     SignInComponent,
-    UserProfileComponent
+    UserProfilePageComponent
   ],
   imports: [
     BrowserModule,

@@ -16,3 +16,7 @@ form {
   margin: auto;
 }
 
+.not-rounded {
+  border-radius: 0 !important;
+}
+
