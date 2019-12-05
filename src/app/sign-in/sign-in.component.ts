@@ -30,7 +30,6 @@ export class SignInComponent implements OnInit {
   onSubmit() {
     this.status = FormStatus.SENDING;
     const headers = new HttpHeaders({ 'Content-Type' : 'application/json'});
-    console.log(this.model);
     this.http.post<User>(`${this.apiUrl}/${this.path}`, this.model, {headers})
       .pipe(
         catchError(err => {

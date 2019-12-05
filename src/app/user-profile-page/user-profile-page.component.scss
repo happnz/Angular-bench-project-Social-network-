@@ -2,39 +2,24 @@ $light-background-color: rgb(245, 245, 245);
 
 .user-profile-main {
   h1 {
-    font-size: 1.1em;
     font-weight: 400;
-    background: rgba($light-background-color, 1);
     overflow: hidden;
   }
 }
 
-.user-profile-posts {
-  ul.user-posts-list {
-    list-style: none;
-    padding-inline-start: 0;
-  }
-
-  .user-post {
-    .user-post__header {
-      background: rgba($light-background-color, 1);
-
-      .user-post__date {
-        font-size: 0.8rem;
-      }
-    }
-  }
-}
-
-.user-avatar-min {
-  max-height: 2em;
-}
-
-ul.user-profile-friends-preview-list {
+ul.user-posts-list, ul.user-profile-friends-preview-list {
   list-style: none;
   padding-inline-start: 0;
+}
 
-  .user-profile-friends-preview-list__header {
-    background: rgba($light-background-color, 1);
-  }
+.user-profile-posts-header {
+  background: rgba($light-background-color, 1);
+  height: 2em;
+}
+
+.block-header {
+  height: 40px;
+  font-size: 1.2em;
+  background: rgba(235, 235, 235, 1);
+  padding: 5px;
 }

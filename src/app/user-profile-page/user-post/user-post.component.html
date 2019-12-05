@@ -1,0 +1,20 @@
+<div class="user-post border">
+  <div class="user-post__header border-bottom p-2">
+    <div class="row">
+      <div class="col-6">
+        <img class="img-fluid rounded-circle user-avatar-min" alt="user-avatar"
+             src="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png"/>
+        {{authorFullName}}
+      </div>
+      <div class="col">
+        <div class="float-right">
+          <span class="user-post__date">{{createdAt | date: 'hh:mm dd.MM.yyyy'}}</span>
+          <i *ngIf="isPersonal" (click)="deletePost(id)" class="fa fa-trash ml-3" aria-hidden="true"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="user-post__body p-3">
+    {{text}}
+  </div>
+</div>

@@ -17,4 +17,16 @@ export class UserService {
     }
     return this.httpClient.get(`${this.apiUrl}/users/${userId}/profile`);
   }
+
+  deletePost(postId: number): Observable<any> {
+    return this.httpClient.delete(`${this.apiUrl}/posts/${postId}`);
+  }
+
+  deleteFriend(friendId: number): Observable<any> {
+    return this.httpClient.delete(`${this.apiUrl}/friends/${friendId}`);
+  }
+
+  friendRequest(action: 'SEND' | 'CANCEL' | 'DECLINE' | 'ACCEPT', friendId: number): Observable<any> {
+    return this.httpClient.post(`${this.apiUrl}/friendRequests?action=${action}&userId=${friendId}`, null);
+  }
 }

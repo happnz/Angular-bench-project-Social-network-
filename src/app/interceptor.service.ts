@@ -17,6 +17,10 @@ export class InterceptorService implements HttpInterceptor {
       catchError((err, caught) => {
         if (err.status === 401) {
           this.router.navigate(['/sign-in']);
+        } else if (err.status >= 500) {
+          this.router.navigate(['/error'], {queryParams: {status: err.status, text: 'Unexpected server error'}});
+        } else if (err.status === 404) {
+          this.router.navigate(['/error'], {queryParams: {status: err.status, text: err.statusText}});
         }
         return throwError(err);
       })

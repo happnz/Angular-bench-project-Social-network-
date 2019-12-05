@@ -20,3 +20,6 @@ form {
   border-radius: 0 !important;
 }
 
+.user-avatar-min {
+  max-height: 2em;
+}

@@ -1,0 +1,13 @@
+$light-background-color: rgb(245, 245, 245);
+
+
+.user-post {
+  .user-post__header {
+    background: rgba($light-background-color, 1);
+
+    .user-post__date {
+      font-size: 0.8rem;
+    }
+  }
+}
+

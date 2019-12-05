@@ -9,8 +9,12 @@ import {RouterModule, Routes} from '@angular/router';
 import { SignInComponent } from './sign-in/sign-in.component';
 import {InterceptorService} from './interceptor.service';
 import { UserProfilePageComponent } from './user-profile-page/user-profile-page.component';
+import { FriendHandlingButtonComponent } from './user-profile-page/friend-handling-button/friend-handling-button.component';
+import { UserPostComponent } from './user-profile-page/user-post/user-post.component';
+import { ErrorPageComponent } from './error-page/error-page.component';
 
 const routes: Routes = [{path: '', pathMatch: 'full', redirectTo: '/sign-in'},
+  {path: 'error', component: ErrorPageComponent},
   {path: 'sign-up', component: SignUpComponent},
   {path: 'sign-in', component: SignInComponent},
   {path: 'profile', redirectTo: 'profile/'},
@@ -21,7 +25,10 @@ const routes: Routes = [{path: '', pathMatch: 'full', redirectTo: '/sign-in'},
     AppComponent,
     SignUpComponent,
     SignInComponent,
-    UserProfilePageComponent
+    UserProfilePageComponent,
+    FriendHandlingButtonComponent,
+    UserPostComponent,
+    ErrorPageComponent
   ],
   imports: [
     BrowserModule,

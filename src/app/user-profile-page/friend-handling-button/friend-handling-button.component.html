@@ -1,0 +1,6 @@
+<button *ngIf="buttonText"
+        (mouseenter)="mouseEnter()"
+        (mouseleave)="mouseLeave()"
+        (click)="handleClick()"
+        class="btn {{buttonClass}} not-rounded mt-1"
+        style="width: 100%">{{buttonText}}</button>
