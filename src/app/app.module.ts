@@ -14,6 +14,7 @@ import { UserPostComponent } from './user-profile-page/user-post/user-post.compo
 import { ErrorPageComponent } from './error-page/error-page.component';
 import { LoadingComponent } from './loading/loading.component';
 import { AddPostComponent } from './user-profile-page/add-post/add-post.component';
+import { CustomDatePipe } from './custom-date.pipe';
 
 const routes: Routes = [{path: '', pathMatch: 'full', redirectTo: '/sign-in'},
   {path: 'error', component: ErrorPageComponent},
@@ -32,7 +33,8 @@ const routes: Routes = [{path: '', pathMatch: 'full', redirectTo: '/sign-in'},
     UserPostComponent,
     ErrorPageComponent,
     LoadingComponent,
-    AddPostComponent
+    AddPostComponent,
+    CustomDatePipe
   ],
   imports: [
     BrowserModule,
