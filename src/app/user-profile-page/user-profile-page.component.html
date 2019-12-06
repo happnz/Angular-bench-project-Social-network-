@@ -1,42 +1,54 @@
 <div class="container">
-  <div class="row">
-    <div class="col-12 col-md-3 border p-0">
-      <div class="user-profile-main">
-        <div class="block-header">
-          {{userProfile?.fullName}}
+  <app-loading *ngIf="loadingStatus.isLoading(); else component"></app-loading>
+  <ng-template #component>
+    <div class="row">
+      <div class="col-12 col-md-3 border p-0">
+        <div class="user-profile-main">
+          <div class="block-header">
+            {{userProfile.fullName}}
+          </div>
+          <img class="img-fluid user-avatar" alt="user-avatar"
+               src="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png"/>
+          <app-friend-handling-button [userId]="userProfile.id"
+                                      [relationToViewer]="relationToViewer?.toString()"></app-friend-handling-button>
+          <div class="block-header">Friends</div>
+          <ul class="user-profile-friends-preview-list p-1 border-top">
+            <!--          TODO add friends count-->
+            <li *ngFor="let friend of userProfile?.friends" class="friend-preview">
+              <img class="img-fluid rounded-circle user-avatar-min float-left" alt="user-avatar"
+                   src="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png"/>
+              <a [routerLink]="['/profile', friend.id]"><span>{{friend.fullName}}</span></a>
+            </li>
+          </ul>
         </div>
-        <img class="img-fluid user-avatar" alt="user-avatar"
-             src="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png"/>
-        <app-friend-handling-button [userId]="userProfile?.id" [relationToViewer]="relationToViewer?.toString()"></app-friend-handling-button>
-        <div class="block-header">Friends</div>
-        <ul class="user-profile-friends-preview-list p-1 border-top">
-<!--          TODO add friends count-->
-          <li *ngFor="let friend of userProfile?.friends" class="friend-preview">
-            <img class="img-fluid rounded-circle user-avatar-min float-left" alt="user-avatar"
-            src="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png"/>
-            <a [routerLink]="['/profile', friend.id]"><span>{{friend.fullName}}</span></a>
-          </li>
-        </ul>
       </div>
-    </div>
-    <div class="col-12 col-md-9 p-0">
-      <div class="user-profile-posts">
-        <div class="block-header p-2"><span>{{userProfile?.fullName}}'s posts</span></div>
-        <ul *ngIf="relationToViewer == 'FRIEND' || relationToViewer == 'PERSONAL'; else unallowed" class="user-posts-list">
-            <li *ngFor="let post of userProfile?.posts">
+      <div class="col-12 col-md-9 p-0">
+        <div class="user-profile-posts">
+          <div class="block-header p-2">
+            <span>{{userProfile.fullName}}'s posts</span>
+            <span *ngIf="relationToViewer == 'PERSONAL'" class="float-right">
+              <i (click)="togglePostInput()" class="fa fa-plus pointer-event" aria-hidden="true" style="cursor: pointer"></i>
+            </span>
+          </div>
+          <app-add-post *ngIf="postInputToggled" (postAdded)="handlePostAdded()"></app-add-post>
+          <ul *ngIf="relationToViewer == 'FRIEND' || relationToViewer == 'PERSONAL'; else unallowed"
+              class="user-posts-list">
+            <li *ngFor="let post of userProfile.posts">
               <app-user-post
                 [isPersonal]="relationToViewer == 'PERSONAL'"
                 [id]="post.id"
                 [authorFullName]="userProfile.fullName"
                 [createdAt]="post.createdAt"
                 [updatedAt]="post.updatedAt"
-                [text]="post.text"></app-user-post>
+                [text]="post.text"
+              (postDeleted)="handlePostDeleted()"></app-user-post>
             </li>
-        </ul>
-        <ng-template #unallowed>
-          <div class="border" style="text-align: center">You are not allowed to see this user's posts</div>
-        </ng-template>
+          </ul>
+          <ng-template #unallowed>
+            <div class="border" style="text-align: center">You are not allowed to see this user's posts</div>
+          </ng-template>
+        </div>
       </div>
     </div>
-  </div>
+  </ng-template>
 </div>

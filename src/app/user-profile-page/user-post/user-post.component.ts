@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {UserService} from '../../user.service';
 
 @Component({
@@ -15,6 +15,8 @@ export class UserPostComponent implements OnInit {
   @Input() text: string;
   @Input() updatedAt?: Date;
 
+  @Output() postDeleted = new EventEmitter();
+
   constructor(private userService: UserService) { }
 
   ngOnInit() {
@@ -23,7 +25,7 @@ export class UserPostComponent implements OnInit {
   deletePost(id: number) {
     if (confirm('Are you sure?')) {
       this.userService.deletePost(id)
-        .subscribe();
+        .subscribe(_ => this.postDeleted.emit());
     }
   }
 }

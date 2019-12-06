@@ -1,0 +1,12 @@
+<div class="mb-2 mt-2">
+  <div class="input-group">
+  <textarea class="form-control"
+            (input)="checkLength()"
+            [formControl]="nameControl"></textarea>
+  </div>
+  <div>
+    <button class="btn btn-info" [disabled]="form.invalid" (click)="submitPost()">Submit</button>
+    <span class="float-right"
+          [ngClass]="charactersLeft < 0 ? 'text-danger' : ''">Characters left: {{charactersLeft}}</span>
+  </div>
+</div>

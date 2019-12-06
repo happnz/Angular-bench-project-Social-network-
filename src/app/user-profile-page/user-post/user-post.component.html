@@ -9,7 +9,7 @@
       <div class="col">
         <div class="float-right">
           <span class="user-post__date">{{createdAt | date: 'hh:mm dd.MM.yyyy'}}</span>
-          <i *ngIf="isPersonal" (click)="deletePost(id)" class="fa fa-trash ml-3" aria-hidden="true"></i>
+          <i *ngIf="isPersonal" (click)="deletePost(id)" class="fa fa-trash ml-3" aria-hidden="true" style="cursor: pointer"></i>
         </div>
       </div>
     </div>

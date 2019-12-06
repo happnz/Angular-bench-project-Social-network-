@@ -29,4 +29,8 @@ export class UserService {
   friendRequest(action: 'SEND' | 'CANCEL' | 'DECLINE' | 'ACCEPT', friendId: number): Observable<any> {
     return this.httpClient.post(`${this.apiUrl}/friendRequests?action=${action}&userId=${friendId}`, null);
   }
+
+  addPost(text: string): Observable<any> {
+    return this.httpClient.post(`${this.apiUrl}/posts`, {text});
+  }
 }

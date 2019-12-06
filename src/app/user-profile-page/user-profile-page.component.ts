@@ -1,4 +1,4 @@
-import {Component, OnChanges, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import UserProfilePublicResponse from './UserProfilePublicResponse';
 import {UserService} from '../user.service';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -7,6 +7,8 @@ import UserProfileForUsersResponse from './UserProfileForUsersResponse';
 import UserProfileForFriendsResponse from './UserProfileForFriendsResponse';
 import UserProfilePersonalResponse from './UserProfilePersonalResponse';
 import FriendResponse from './FriendResponse';
+import {catchError} from 'rxjs/operators';
+import LoadingStatus from '../shared/LoadingStatus';
 
 @Component({
   selector: 'app-user-profile-page',
@@ -14,8 +16,10 @@ import FriendResponse from './FriendResponse';
   styleUrls: ['./user-profile-page.component.scss']
 })
 export class UserProfilePageComponent implements OnInit {
+  loadingStatus = new LoadingStatus();
   userProfile: UserProfilePublicResponse | UserProfileForUsersResponse | UserProfileForFriendsResponse | UserProfilePersonalResponse;
   relationToViewer: Relation;
+  postInputToggled = false;
 
   constructor(private userService: UserService,
               private route: ActivatedRoute,
@@ -28,12 +32,20 @@ export class UserProfilePageComponent implements OnInit {
     this.fetchUserProfile(userId);
     this.route.params.subscribe(params => {
       const id = params.id;
-      this.fetchUserProfile(id); // reset and set based on new parameter this time
+      this.fetchUserProfile(id);
     });
   }
 
   fetchUserProfile(userId: number) {
+    this.loadingStatus.startLoading();
+
     this.userService.getUserProfile(userId)
+      .pipe(
+        catchError((err => {
+          this.loadingStatus.finishLoading(err);
+          return null;
+        }))
+      )
       .subscribe(data => {
         switch (data.relation) {
           case Relation.USER:
@@ -58,6 +70,22 @@ export class UserProfilePageComponent implements OnInit {
             this.userProfile = new UserProfilePublicResponse(data.id, data.name, data.lastName);
             break;
         }
+        this.loadingStatus.finishLoading();
       });
+  }
+
+  togglePostInput() {
+    this.postInputToggled = !this.postInputToggled;
+  }
+
+  handlePostAdded() {
+    this.postInputToggled = false;
+    this.fetchUserProfile(0);
+    //  TODO fetch posts only instead of the whole profile
+  }
+
+  handlePostDeleted() {
+    this.fetchUserProfile(0);
+    //  TODO fetch posts only instead of the whole profile
   }
 }
