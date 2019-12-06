@@ -63,7 +63,8 @@ export class UserProfilePageComponent implements OnInit {
             this.userProfile =
               new UserProfilePersonalResponse(data.id, data.name, data.lastName,
                 data.friends.map(friend => new FriendResponse(friend.id, friend.name, friend.lastName)),
-                data.posts, data.friendRequests);
+                data.posts,
+                data.friendRequests.map(friend => new FriendResponse(friend.id, friend.name, friend.lastName)));
             this.relationToViewer = data.relation;
             break;
           default:

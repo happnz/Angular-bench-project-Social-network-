@@ -1,0 +1,23 @@
+.user-notifications {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
+
+.user-notifications__header {
+  cursor: pointer;
+  background-color: #00f2ff;
+  border-radius: 5px;
+}
+
+.user-notifications__header.with-notifications {
+  background-color: #00e525;
+}
+
+ul {
+  list-style-type: none;
+}
+
+.user-notifications__body {
+  background-color: #00f2ec;
+}

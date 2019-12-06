@@ -1,0 +1,18 @@
+<div class="user-notifications">
+  <div class="user-notifications__header p-2"
+       (click)="toggleNotificationDropdown()"
+  [ngClass]="friendRequests.length > 0 ? 'with-notifications' : ''">
+    Notifications ({{friendRequests.length}})
+  </div>
+  <div class="user-notifications__body" [hidden]="!dropdownToggled">
+    <ul class="user-notifications-list">
+      <li *ngFor="let friendRequest of friendRequests">
+        <span>{{friendRequest.fullName}}</span>
+        <button class="btn btn-sm btn-success" (click)="handleFriendRequest('ACCEPT', friendRequest.id)">ACCEPT
+        </button>
+        <button class="btn btn-sm btn-danger" (click)="handleFriendRequest('DECLINE', friendRequest.id)">DECLINE
+        </button>
+      </li>
+    </ul>
+  </div>
+</div>

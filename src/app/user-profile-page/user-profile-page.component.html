@@ -50,5 +50,8 @@
         </div>
       </div>
     </div>
+    <app-notifications
+      *ngIf="relationToViewer == 'PERSONAL'"
+    [friendRequests]="userProfile.friendRequests"></app-notifications>
   </ng-template>
 </div>
