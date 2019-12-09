@@ -23,3 +23,7 @@ form {
 .user-avatar-min {
   max-height: 2em;
 }
+
+.list-style-none {
+  list-style-type: none;
+}

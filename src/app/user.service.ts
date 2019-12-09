@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import {environment} from '../environments/environment';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
+import PaginationQuery from './shared/PaginationQuery';
+import PostWithAuthorResponse from './user-profile-page/PostWithAuthorResponse';
+import FriendResponse from './user-profile-page/FriendResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -32,5 +35,9 @@ export class UserService {
 
   addPost(text: string): Observable<any> {
     return this.httpClient.post(`${this.apiUrl}/posts`, {text});
+  }
+
+  getNews(paginationQuery: PaginationQuery): Observable<PostWithAuthorResponse[]> {
+    return this.httpClient.get<PostWithAuthorResponse[]>(`${this.apiUrl}/news`, {params: paginationQuery as any});
   }
 }

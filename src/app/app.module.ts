@@ -16,13 +16,15 @@ import { LoadingComponent } from './loading/loading.component';
 import { AddPostComponent } from './user-profile-page/add-post/add-post.component';
 import { CustomDatePipe } from './custom-date.pipe';
 import { NotificationsComponent } from './user-profile-page/notifications/notifications.component';
+import { NewsComponent } from './news/news.component';
 
 const routes: Routes = [{path: '', pathMatch: 'full', redirectTo: '/sign-in'},
   {path: 'error', component: ErrorPageComponent},
   {path: 'sign-up', component: SignUpComponent},
   {path: 'sign-in', component: SignInComponent},
   {path: 'profile', redirectTo: 'profile/'},
-  {path: 'profile/:id', component: UserProfilePageComponent}];
+  {path: 'profile/:id', component: UserProfilePageComponent},
+  {path: 'news', component: NewsComponent}];
 
 @NgModule({
   declarations: [
@@ -36,7 +38,8 @@ const routes: Routes = [{path: '', pathMatch: 'full', redirectTo: '/sign-in'},
     LoadingComponent,
     AddPostComponent,
     CustomDatePipe,
-    NotificationsComponent
+    NotificationsComponent,
+    NewsComponent
   ],
   imports: [
     BrowserModule,

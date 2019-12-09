@@ -1,0 +1,11 @@
+<ul id="newsFeedList" class="list-style-none">
+  <li *ngFor="let post of posts">
+    <app-user-post
+      [isPersonal]="false"
+      [id]="post.id"
+      [authorFullName]="post.author.fullName"
+      [createdAt]="post.createdAt"
+      [updatedAt]="post.updatedAt"
+      [text]="post.text"></app-user-post>
+  </li>
+</ul>
