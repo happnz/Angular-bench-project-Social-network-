@@ -9,6 +9,7 @@ import {UserService} from '../../user.service';
 export class UserPostComponent implements OnInit {
   @Input() isPersonal: boolean;
   @Input() id: number;
+  @Input() authorId: number;
   @Input() authorFullName: string;
   @Input() authorAvatarSrc?: string;
   @Input() createdAt: Date;

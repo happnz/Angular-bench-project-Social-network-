@@ -2,6 +2,7 @@
   <li *ngFor="let post of posts">
     <app-user-post
       [isPersonal]="false"
+      [authorId]="post.author.id"
       [id]="post.id"
       [authorFullName]="post.author.fullName"
       [createdAt]="post.createdAt"

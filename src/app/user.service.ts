@@ -5,6 +5,7 @@ import {Observable} from 'rxjs';
 import PaginationQuery from './shared/PaginationQuery';
 import PostWithAuthorResponse from './user-profile-page/PostWithAuthorResponse';
 import FriendResponse from './user-profile-page/FriendResponse';
+import {map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -38,6 +39,11 @@ export class UserService {
   }
 
   getNews(paginationQuery: PaginationQuery): Observable<PostWithAuthorResponse[]> {
-    return this.httpClient.get<PostWithAuthorResponse[]>(`${this.apiUrl}/news`, {params: paginationQuery as any});
+    return this.httpClient.get<PostWithAuthorResponse[]>(`${this.apiUrl}/news`, {params: paginationQuery as any})
+      .pipe(
+        map(results =>
+          results.map(res =>
+            new PostWithAuthorResponse(res.id, res.text, res.createdAt, res.updatedAt,
+              new FriendResponse(res.author.id, res.author.name, res.author.lastName)))));
   }
 }

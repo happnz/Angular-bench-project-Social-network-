@@ -1,14 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {UserService} from '../user.service';
 import PaginationQuery from '../shared/PaginationQuery';
 import PostWithAuthorResponse from '../user-profile-page/PostWithAuthorResponse';
 
 @Component({
   selector: 'app-news',
-  templateUrl: './news.component.html',
-  styleUrls: ['./news.component.css']
+  templateUrl: './news.component.html'
 })
-export class NewsComponent implements OnInit {
+export class NewsComponent implements OnInit, OnDestroy {
   private paginationQuery: PaginationQuery = {
     pageNumber: 1,
     pageSize: 10
@@ -16,20 +15,30 @@ export class NewsComponent implements OnInit {
 
   private posts: PostWithAuthorResponse[] = [];
   private allLoaded = false;
-  private isLoading: boolean;
+  private isLoading = false;
+  private listener = null;
 
   constructor(private userService: UserService) { }
 
   ngOnInit() {
     this.fetchNews();
-    window.addEventListener('scroll', this.handleScroll.bind(this));
+    this.listener = this.handleScroll.bind(this);
+    window.addEventListener('scroll', this.listener);
+  }
+
+  ngOnDestroy() {
+    window.removeEventListener('scroll', this.listener);
   }
 
   handleScroll() {
     const ulElem = document.getElementById('newsFeedList');
 
-    if ((window.pageYOffset + document.documentElement.clientHeight) > (ulElem.offsetTop + ulElem.clientHeight)) {
+    if (isScrolledPastUl()) {
       this.fetchNews();
+    }
+
+    function isScrolledPastUl() {
+      return (window.pageYOffset + document.documentElement.clientHeight) > (ulElem.offsetTop + ulElem.clientHeight);
     }
   }
 
@@ -43,8 +52,8 @@ export class NewsComponent implements OnInit {
           if (posts.length < this.paginationQuery.pageSize) {
             this.allLoaded = true;
           }
+          this.isLoading = false;
         });
-      this.isLoading = false;
     }
   }
 

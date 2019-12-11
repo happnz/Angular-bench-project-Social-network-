@@ -36,6 +36,7 @@
             <li *ngFor="let post of userProfile.posts">
               <app-user-post
                 [isPersonal]="relationToViewer == 'PERSONAL'"
+                [authorId]="userProfile.id"
                 [id]="post.id"
                 [authorFullName]="userProfile.fullName"
                 [createdAt]="post.createdAt"
