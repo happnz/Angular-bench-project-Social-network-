@@ -4,6 +4,7 @@ import { UserPostComponent } from './user-post.component';
 import {UserService} from '../../user.service';
 import {CustomDatePipe} from '../../custom-date.pipe';
 import {of} from 'rxjs';
+import {RouterTestingModule} from '@angular/router/testing';
 
 describe('UserPostComponent', () => {
   let component: UserPostComponent;
@@ -23,7 +24,8 @@ describe('UserPostComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ UserPostComponent, CustomDatePipe ],
-      providers: [{ provide: UserService, useValue: new UserService(null)}, CustomDatePipe ]
+      providers: [{ provide: UserService, useValue: new UserService(null)}, CustomDatePipe ],
+      imports: [ RouterTestingModule ]
     })
     .compileComponents();
 
