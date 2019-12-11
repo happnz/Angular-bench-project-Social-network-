@@ -27,3 +27,8 @@ form {
 .list-style-none {
   list-style-type: none;
 }
+
+.no-content-placeholder {
+  border: 1px solid black;
+  text-align: center;
+}

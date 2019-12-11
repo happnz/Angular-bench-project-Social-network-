@@ -1,3 +1,4 @@
+<ng-container *ngIf="posts.length; else noPosts">
 <ul id="newsFeedList" class="list-style-none">
   <li *ngFor="let post of posts">
     <app-user-post
@@ -10,3 +11,7 @@
       [text]="post.text"></app-user-post>
   </li>
 </ul>
+</ng-container>
+<ng-template #noPosts>
+  <div class="container no-content-placeholder">No posts here</div>
+</ng-template>
