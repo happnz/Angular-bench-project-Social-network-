@@ -1,0 +1,59 @@
+$dark: #000;
+$light: invert($dark);
+$baseHeight: 50px;
+
+.user-menu-wrapper {
+  height: $baseHeight;
+}
+
+.user-menu-holder {
+  height: $baseHeight;
+  width: 100%;
+  max-width: 100%;
+  background-color: #eee;
+
+  ul.user-menu {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 100%;
+
+    list-style-type: none;
+
+    li {
+      display: inline;
+
+      a {
+        color: $dark;
+        padding: 5px;
+
+        @mixin activeNavLink {
+          background-color: $dark;
+          color: $light;
+          text-decoration: none;
+        }
+
+        &:hover {
+          @include activeNavLink;
+        }
+
+        &.active {
+          @include activeNavLink;
+        }
+      }
+
+      margin: 0;
+    }
+  }
+
+  &.fixed {
+    position: fixed;
+    height: $baseHeight * 0.75;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+
+    transition: 0.3s;
+  }
+}

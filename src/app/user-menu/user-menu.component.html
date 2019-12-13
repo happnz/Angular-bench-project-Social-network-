@@ -1,6 +1,10 @@
-<ul class="user-menu">
-  <li><a routerLink="/profile">Моя страница</a></li>
-  <li><a routerLink="/friends">Друзья</a></li>
-  <li><a routerLink="/feed">Лента</a></li>
-  <li><a routerLink="/search">Поиск</a></li>
-</ul>
+<div class="user-menu-wrapper">
+  <div class="user-menu-holder" [ngClass]="{'fixed' : scrolledDown}">
+    <ul class="user-menu">
+      <li><a routerLink="/profile" routerLinkActive="active">Моя страница</a></li>
+      <li><a routerLink="/friends" routerLinkActive="active">Друзья</a></li>
+      <li><a routerLink="/news" routerLinkActive="active">Лента</a></li>
+      <li><a routerLink="/search" routerLinkActive="active">Поиск</a></li>
+    </ul>
+  </div>
+</div>
