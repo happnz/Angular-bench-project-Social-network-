@@ -1,4 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
+import {SessionService} from '../session.service';
 
 @Component({
   selector: 'app-user-menu',
@@ -10,7 +11,7 @@ export class UserMenuComponent implements OnInit, OnDestroy {
   scrolledDown = false;
   componentScrollHandler = this.scrollHandler.bind(this);
 
-  constructor() {
+  constructor(private sessionService: SessionService) {
   }
 
   ngOnInit() {
@@ -25,5 +26,9 @@ export class UserMenuComponent implements OnInit, OnDestroy {
     const menuElem: HTMLElement = document.querySelector('.user-menu-holder');
 
     this.scrolledDown = window.pageYOffset > menuElem.offsetTop + menuElem.offsetHeight + this.additionalOffset;
+  }
+
+  signOut() {
+    this.sessionService.signOut();
   }
 }

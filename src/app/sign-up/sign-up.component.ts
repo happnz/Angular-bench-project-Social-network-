@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {User} from '../user';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {environment} from '../../environments/environment';
-import {Router} from '@angular/router';
-import {catchError, tap} from 'rxjs/operators';
-import {of} from 'rxjs';
-import { FormStatus } from '../shared/FormStatus';
+import {SessionService} from '../session.service';
+import {Observable} from 'rxjs';
+import {HttpErrorResponse} from '@angular/common/http';
+import {SessionQuery} from '../state/session/session.query';
 
 @Component({
   selector: 'app-sign-up',
@@ -14,38 +12,21 @@ import { FormStatus } from '../shared/FormStatus';
 })
 export class SignUpComponent implements OnInit {
   model: User;
-  apiUrl = environment.apiUrl;
-  path = 'sign-up';
-  status: FormStatus = FormStatus.NOT_SUBMITTED;
+  private isLoading$: Observable<boolean>;
+  private error$: Observable<HttpErrorResponse>;
 
   constructor(
-    private http: HttpClient,
-    private router: Router
+    private sessionService: SessionService,
+    private sessionQuery: SessionQuery
   ) { }
 
   ngOnInit() {
     this.model = new User('', '', '', '');
+    this.isLoading$ = this.sessionQuery.selectLoading();
+    this.error$ = this.sessionQuery.selectError();
   }
 
   onSubmit() {
-    this.status = FormStatus.SENDING;
-    const headers = new HttpHeaders({ 'Content-Type' : 'application/json'});
-    this.http.post<User>(`${this.apiUrl}/${this.path}`, this.model, {headers})
-      .pipe(
-        catchError(err => {
-          this.status = FormStatus.FAILED;
-          return of(null);
-        })
-      )
-      .subscribe(() => {
-        if (this.status !== FormStatus.FAILED) {
-          this.status = FormStatus.SUBMITTED;
-          this.router.navigate(['/']);
-        }
-      });
-  }
-
-  get FormStatus() {
-    return FormStatus;
+    this.sessionService.signUp(this.model);
   }
 }

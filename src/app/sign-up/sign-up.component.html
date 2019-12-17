@@ -30,8 +30,9 @@
   </div>
   <button type="submit" class="btn btn-primary" [disabled]="!signUpForm.form.valid">Sign up</button>
   <a class="float-right" routerLink="/sign-in">Sign in</a>
-  <div class="mt-1 alert alert-info" *ngIf="this.status === FormStatus.SENDING">Processing...</div>
-  <div class="mt-1 alert alert-success" *ngIf="this.status === FormStatus.SUBMITTED">Success</div>
-  <div class="mt-1 alert alert-danger" *ngIf="this.status === FormStatus.FAILED">Error</div>
+  <app-form-status
+    [loading$]="this.isLoading$"
+    [successCondition$]="sessionQuery.isLoggedIn$"
+    [error$]="this.error$"></app-form-status>
 </form>
 </div>

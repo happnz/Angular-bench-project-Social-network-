@@ -1,0 +1,3 @@
+<div class="mt-1 alert alert-info" *ngIf="this.loading$ | async"><app-loading></app-loading></div>
+<div class="mt-1 alert alert-success" *ngIf="this.successCondition$ | async">Success</div>
+<div class="mt-1 alert alert-danger" *ngIf="this.error$ | async">Error: {{errorText}}</div>

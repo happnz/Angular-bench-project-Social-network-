@@ -3,19 +3,22 @@ import {HttpEvent, HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest, HttpR
 import {Observable, of, throwError} from 'rxjs';
 import {catchError} from 'rxjs/operators';
 import {Router} from '@angular/router';
+import {SessionService} from './session.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class InterceptorService implements HttpInterceptor {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router,
+              private sessionService: SessionService) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const request = req.clone({headers: new HttpHeaders({'Content-Type': 'application/json'}), withCredentials: true});
     return next.handle(request).pipe(
       catchError((err, caught) => {
         if (err.status === 401) {
+          this.sessionService.clearState();
           this.router.navigate(['/sign-in']);
         } else if (err.status >= 500) {
           this.router.navigate(['/error'], {queryParams: {status: err.status, text: 'Unexpected server error'}});

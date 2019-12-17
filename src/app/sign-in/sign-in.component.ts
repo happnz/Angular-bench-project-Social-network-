@@ -1,11 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {User} from '../user';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {environment} from '../../environments/environment';
-import {Router} from '@angular/router';
-import {catchError, tap} from 'rxjs/operators';
-import {of} from 'rxjs';
-import { FormStatus } from '../shared/FormStatus';
+import {Observable} from 'rxjs';
+import {SessionService, SignInBody} from '../session.service';
+import {SessionQuery} from '../state/session/session.query';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
   selector: 'app-sign-in',
@@ -14,45 +11,21 @@ import { FormStatus } from '../shared/FormStatus';
 })
 export class SignInComponent implements OnInit {
   model: SignInBody;
-  apiUrl = environment.apiUrl;
-  path = 'sign-in';
-  status: FormStatus = FormStatus.NOT_SUBMITTED;
+  isLoading$: Observable<boolean>;
+  isCompleted$: Observable<boolean>;
+  error$: Observable<HttpErrorResponse>;
 
-  constructor(
-    private http: HttpClient,
-    private router: Router
-  ) { }
+  constructor(private sessionService: SessionService,
+              private sessionQuery: SessionQuery) { }
 
   ngOnInit() {
     this.model = new SignInBody('', '');
+    this.isLoading$ = this.sessionQuery.selectLoading();
+    this.isCompleted$ = this.sessionQuery.isLoggedIn$;
+    this.error$ = this.sessionQuery.selectError();
   }
 
   onSubmit() {
-    this.status = FormStatus.SENDING;
-    const headers = new HttpHeaders({ 'Content-Type' : 'application/json'});
-    this.http.post<User>(`${this.apiUrl}/${this.path}`, this.model, {headers})
-      .pipe(
-        catchError(err => {
-          this.status = FormStatus.FAILED;
-          return of(null);
-        })
-      )
-      .subscribe(() => {
-        if (this.status !== FormStatus.FAILED) {
-          this.status = FormStatus.SUBMITTED;
-          this.router.navigate(['/profile']);
-        }
-      });
-  }
-
-  get FormStatus() {
-    return FormStatus;
-  }
-}
-
-class SignInBody {
-  constructor(public email: string, public password: string) {
-    this.email = email;
-    this.password = password;
+    this.sessionService.signIn(this.model);
   }
 }
