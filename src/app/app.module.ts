@@ -20,11 +20,12 @@ import { NewsComponent } from './news/news.component';
 import { UserMenuComponent } from './user-menu/user-menu.component';
 import { FormStatusComponent } from './form-status/form-status.component';
 import { ShowIfLoggedInDirective } from './show-if-logged-in.directive';
+import LoggedOutGuard from './logged-out-guard';
 
 const routes: Routes = [{path: '', pathMatch: 'full', redirectTo: '/sign-in'},
   {path: 'error', component: ErrorPageComponent},
-  {path: 'sign-up', component: SignUpComponent},
-  {path: 'sign-in', component: SignInComponent},
+  {path: 'sign-up', component: SignUpComponent, canActivate: [LoggedOutGuard]},
+  {path: 'sign-in', component: SignInComponent, canActivate: [LoggedOutGuard]},
   {path: 'profile', redirectTo: 'profile/'},
   {path: 'profile/:id', component: UserProfilePageComponent},
   {path: 'news', component: NewsComponent}];

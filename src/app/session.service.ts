@@ -57,11 +57,10 @@ export class SessionService {
   signOut() {
     this.sessionStore.setLoading(true);
     this.http.post(`${this.apiUrl}/sign-out`, null)
-      .subscribe(_ => {
-        this.sessionStore.update(createInitialState());
-        this.router.navigateByUrl('/sign-in');
-        this.sessionStore.setLoading(false);
-      });
+      .subscribe();
+    this.sessionStore.update(createInitialState());
+    this.router.navigateByUrl('/sign-in');
+    this.sessionStore.setLoading(false);
   }
 
   clearState() {
