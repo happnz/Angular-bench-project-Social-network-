@@ -1,0 +1,6 @@
+@import "bootstrap_themed";
+
+.border-light {
+  @extend .border;
+  border-color: map-get($theme-colors, "primary-lighter") !important;
+}

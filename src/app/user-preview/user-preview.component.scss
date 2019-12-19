@@ -1,0 +1,9 @@
+$max-height: 3em;
+
+.user-preview {
+  max-height: $max-height;
+
+  &--avatar {
+    height: $max-height;
+  }
+}

@@ -22,7 +22,6 @@ export class SearchUsersService {
     return this.http.get<PaginationResponse<FriendResponse>>(`${this.apiUrl}/users/search`, {params})
       .pipe(
         map(res => {
-          console.log(res);
           res.data = res.data.map(friendResponse => plainToClass(FriendResponse, friendResponse));
           return res;
         })

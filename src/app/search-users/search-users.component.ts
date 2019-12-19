@@ -3,9 +3,11 @@ import {USERS_PAGINATOR} from './users-paginator';
 import {PaginationResponse, PaginatorPlugin} from '@datorama/akita';
 import {SearchUsersState} from './search-users.store';
 import {SearchUsersService} from './search-users.service';
-import {Observable} from 'rxjs';
-import {startWith, switchMap} from 'rxjs/operators';
+import {combineLatest, Observable} from 'rxjs';
+import {startWith, switchMap, tap} from 'rxjs/operators';
 import FriendResponse from '../user-profile-page/FriendResponse';
+import {FormControl} from '@angular/forms';
+import SearchUsersQuery from './search-users.query';
 
 @Component({
   selector: 'app-search-users',
@@ -14,23 +16,35 @@ import FriendResponse from '../user-profile-page/FriendResponse';
 })
 export class SearchUsersComponent implements OnInit, OnDestroy {
   pagination$: Observable<PaginationResponse<FriendResponse>>;
-  name = '';
-  lastName = '';
+  name = new FormControl('');
+  lastName = new FormControl('');
 
   constructor(@Inject(USERS_PAGINATOR) public paginatorRef: PaginatorPlugin<SearchUsersState>,
-              private searchUsersService: SearchUsersService) {}
+              private searchUsersService: SearchUsersService,
+              private searchUsersQuery: SearchUsersQuery) {}
 
   ngOnInit() {
+    const nameFilter = this.name.valueChanges.pipe(startWith(''));
+    const lastNameFilter = this.lastName.valueChanges.pipe(startWith(''));
 
-    this.pagination$ = this.paginatorRef.pageChanges.pipe(
-      switchMap((page) => {
-        const req = () => this.searchUsersService.fetchUsers({
-          pageSize: 2,
-          pageNumber: page,
-        },
-          this.name, this.lastName);
-        return this.paginatorRef.getPage(req);
-      })
+    this.pagination$ = combineLatest(
+      this.paginatorRef.pageChanges,
+      combineLatest(nameFilter, lastNameFilter)
+        .pipe(
+          tap((v) => {
+            this.paginatorRef.clearCache();
+            this.paginatorRef.setPage(1);
+          })
+        ))
+      .pipe(
+        switchMap(([page, [name, lastName]]) => {
+          const req = () => this.searchUsersService.fetchUsers({
+              pageSize: 10,
+              pageNumber: page,
+            },
+            name, lastName);
+          return this.paginatorRef.getPage(req);
+        })
     );
   }
 

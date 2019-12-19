@@ -1,5 +1,12 @@
-<div class="user-preview">
-    <img class="img-fluid rounded-circle user-avatar-min" alt="user-avatar"
-         src="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png"/>
-    <a routerLink="/profile/{{user.id}}">{{user.fullName}}</a>
+<div class="user-preview border-light rounded mb-2">
+  <div class="row">
+    <div class="col-2">
+      <img class="user-preview--avatar" src="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png" alt="{{user.fullName}}">
+    </div>
+    <div class="col">
+      <div class="card-body">
+        <a routerLink="/profile/{{user.id}}">{{user.fullName}}</a>
+      </div>
+    </div>
+  </div>
 </div>
