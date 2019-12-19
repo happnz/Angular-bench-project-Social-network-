@@ -21,38 +21,49 @@
       </app-user-preview>
     </li>
   </ol>
-  <div>
-    {{pagination.from}} - {{pagination.to}} of {{pagination.total}}
-  </div>
 
-  <div class="btn-toolbar pagination-pages-block">
-    <div class="btn-group mr-2">
-      <button class="btn btn-secondary" [class.disabled]="paginatorRef.isFirst"
-              (click)="paginatorRef.setFirstPage()">1
-      </button>
+
+  <div class="text-center">
+    <div>
+      {{pagination.from}} - {{pagination.to}} of {{pagination.total}}
     </div>
 
-    <div class="btn-group">
-      <button class="btn btn-secondary" [class.disabled]="paginatorRef.isFirst"
-              (click)="paginatorRef.prevPage()">&lt;
-      </button>
+    <nav>
+      <ul class="pagination-centered">
+        <li class="page-item" [class.disabled]="paginatorRef.isFirst">
+          <button class="page-link"
+                  (click)="paginatorRef.setFirstPage()">1
+          </button>
+        </li>
 
-      <button class="btn btn-secondary"
-              [class.active]="pagination.currentPage === page"
-              *ngFor="let page of pagination.pageControls"
-              (click)="paginatorRef.setPage(page)">
-        {{page}}
-      </button>
+        <li class="page-item" [class.disabled]="paginatorRef.isFirst">
+          <button class="page-link"
+                  (click)="paginatorRef.prevPage()">&lt;
+          </button>
+        </li>
 
-      <button class="btn btn-secondary" [class.disabled]="paginatorRef.isLast"
-              (click)="paginatorRef.nextPage()">&gt;
-      </button>
-    </div>
+        <li class="page-item"
+            [class.active]="pagination.currentPage === page"
+            *ngFor="let page of pagination.pageControls"
+            (click)="paginatorRef.setPage(page)">
+          <button class="page-link"
+                  (click)="paginatorRef.prevPage()">
+            {{page}}
+          </button>
+        </li>
+        <li class="page-item" [class.disabled]="paginatorRef.isLast">
+          <button class="page-link"
+                  (click)="paginatorRef.nextPage()">&gt;
+          </button>
+        </li>
 
-    <div class="btn-group ml-2">
-      <button class="btn btn-secondary" [class.disabled]="paginatorRef.isLast"
-              (click)="paginatorRef.setLastPage()">{{pagination.lastPage}}</button>
-    </div>
+        <li class="page-item" [class.disabled]="paginatorRef.isLast">
+          <button class="page-link"
+                  (click)="paginatorRef.setLastPage()">
+            {{pagination.lastPage}}
+          </button>
+        </li>
+      </ul>
+    </nav>
   </div>
 </div>
-

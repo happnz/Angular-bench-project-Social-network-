@@ -4,3 +4,8 @@
   @extend .border;
   border-color: map-get($theme-colors, "primary-lighter") !important;
 }
+
+.pagination-centered {
+  @extend .pagination;
+  justify-content: center;
+}
