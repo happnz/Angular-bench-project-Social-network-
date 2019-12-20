@@ -1,13 +1,16 @@
-$dark: #000;
-$light: invert($dark);
-$baseHeight: 50px;
+@import "../../assets/scss/base/variables";
+@import "../../assets/scss/base/mixins";
+
+$dark: $primary;
+$light: $white-smoke;
+$base-height: 50px;
 
 .user-menu-wrapper {
-  height: $baseHeight;
+  height: $base-height;
 }
 
 .user-menu-holder {
-  height: $baseHeight;
+  height: $base-height;
   width: 100%;
   max-width: 100%;
   background-color: #eee;
@@ -18,7 +21,7 @@ $baseHeight: 50px;
     align-items: center;
     height: 100%;
 
-    list-style-type: none;
+    @include reset-list;
 
     li {
       display: inline;
@@ -26,6 +29,7 @@ $baseHeight: 50px;
       a {
         color: $dark;
         padding: 5px;
+        border-radius: $border-radius;
 
         @mixin activeNavLink {
           background-color: $dark;
@@ -48,7 +52,7 @@ $baseHeight: 50px;
 
   &.fixed {
     position: fixed;
-    height: $baseHeight * 0.75;
+    height: $base-height * 0.75;
     top: 0;
     left: 0;
     width: 100%;

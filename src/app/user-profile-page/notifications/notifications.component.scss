@@ -1,3 +1,5 @@
+@import "../../../assets/scss/base/variables";
+
 .user-notifications {
   position: fixed;
   bottom: 20px;
@@ -6,12 +8,12 @@
 
 .user-notifications__header {
   cursor: pointer;
-  background-color: #00f2ff;
+  background-color: $primary-lighter;
   border-radius: 5px;
 }
 
 .user-notifications__header.with-notifications {
-  background-color: #00e525;
+  background-color: rgba($green, 0.7);
 }
 
 ul {
@@ -19,5 +21,5 @@ ul {
 }
 
 .user-notifications__body {
-  background-color: #00f2ec;
+  background-color: $white-smoke;
 }

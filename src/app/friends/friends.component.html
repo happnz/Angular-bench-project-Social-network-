@@ -16,7 +16,7 @@
 <app-loading *ngIf="(searchUsersQuery.selectLoading() | async)"></app-loading>
 
 <div *ngIf="(pagination$ | async) as pagination">
-  <ol id="search-users-list" class="list-style-none">
+  <ol id="search-users-list" class="reset-list">
     <li *ngFor="let user of pagination.data">
       <app-user-preview
         [user]="user">

@@ -1,6 +1,4 @@
-$primary: #0545ff;
-$primary-lighter: #00d6ff;
-
+@import "./base/variables";
 @import "../../../node_modules/bootstrap/scss/bootstrap";
 
 $theme-colors: map-merge($theme-colors, ("primary-lighter": $primary-lighter));

@@ -2,7 +2,7 @@
   <app-loading *ngIf="loadingStatus.isLoading(); else component"></app-loading>
   <ng-template #component>
     <div class="row">
-      <div class="col-12 col-md-3 border p-0">
+      <div class="col-12 col-md-3 border-light p-0">
         <div class="user-profile-main">
           <div class="block-header">
             {{userProfile.fullName}}
@@ -25,7 +25,7 @@
       </div>
       <div class="col-12 col-md-9 p-0">
         <div class="user-profile-posts">
-          <div class="block-header p-2">
+          <div class="block-header border">
             <span>{{userProfile.fullName}}'s posts</span>
             <span *ngIf="relationToViewer == 'PERSONAL'" class="float-right">
               <i (click)="togglePostInput()" class="fa fa-plus pointer-event" aria-hidden="true" style="cursor: pointer"></i>

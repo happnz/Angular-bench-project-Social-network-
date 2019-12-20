@@ -1,4 +1,15 @@
 @import "bootstrap_themed";
+@import "base/mixins";
+@import "base/forms";
+
+body {
+  max-width: 70%;
+  margin: auto;
+}
+
+.not-rounded {
+  border-radius: 0 !important;
+}
 
 .border-light {
   @extend .border;
@@ -8,4 +19,31 @@
 .pagination-centered {
   @extend .pagination;
   justify-content: center;
+}
+
+.block-header {
+  @extend .p-2;
+  background: {
+    color: $white-smoke;
+  };
+  font-size: 1.2em;
+}
+
+.user-avatar-min {
+  @extend .img-fluid;
+  @extend .rounded-circle;
+  max-height: 2em;
+}
+
+.reset-list {
+  @include reset-list;
+}
+
+.no-content-placeholder {
+  @extend .border;
+  text-align: center;
+}
+
+i {
+  color: $primary;
 }

@@ -1,0 +1,17 @@
+@import "variables";
+
+form {
+  background: $white-smoke;
+  padding: 2rem;
+  border: solid $primary-lighter 2px;
+  max-width: 50%;
+  margin: auto;
+}
+
+.ng-valid:not(form) {
+  border-left: solid 5px $green;
+}
+
+.ng-invalid:not(form) {
+  border-left: solid 5px $green;
+}
