@@ -22,9 +22,9 @@ import { FormStatusComponent } from './form-status/form-status.component';
 import { ShowIfLoggedInDirective } from './show-if-logged-in.directive';
 import LoggedOutGuard from './logged-out-guard';
 import { SearchUsersComponent } from './search-users/search-users.component';
-import {USERS_PAGINATOR} from './search-users/users-paginator';
 import { UserPreviewComponent } from './user-preview/user-preview.component';
 import LoggedInGuard from './logged-in-guard';
+import { FriendsComponent } from './friends/friends.component';
 
 const routes: Routes = [{path: '', pathMatch: 'full', redirectTo: '/sign-in'},
   {path: 'error', component: ErrorPageComponent},
@@ -33,8 +33,9 @@ const routes: Routes = [{path: '', pathMatch: 'full', redirectTo: '/sign-in'},
   {path: 'profile', redirectTo: 'profile/'},
   {path: 'profile/:id', component: UserProfilePageComponent},
   {path: 'news', component: NewsComponent, canActivate: [LoggedInGuard]},
-  {path: 'search', component: SearchUsersComponent, canActivate: [LoggedInGuard], data: { type: 'ANY' }},
-  {path: 'friends', component: SearchUsersComponent, canActivate: [LoggedInGuard], data: { type: 'FRIENDS' }}];
+  {path: 'search', component: SearchUsersComponent, canActivate: [LoggedInGuard]},
+  {path: 'friends', redirectTo: 'friends/'},
+  {path: 'friends/:id', component: FriendsComponent, canActivate: [LoggedInGuard]}];
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ const routes: Routes = [{path: '', pathMatch: 'full', redirectTo: '/sign-in'},
     FormStatusComponent,
     ShowIfLoggedInDirective,
     SearchUsersComponent,
-    UserPreviewComponent
+    UserPreviewComponent,
+    FriendsComponent
   ],
   imports: [
     BrowserModule,

@@ -1,29 +1,41 @@
 import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
-import {USERS_PAGINATOR} from './users-paginator';
+import {USERS_PAGINATOR} from '../search-users/users-paginator';
 import {PaginationResponse, PaginatorPlugin} from '@datorama/akita';
-import {SearchUsersState} from './search-users.store';
-import {SearchUsersService} from './search-users.service';
-import {combineLatest, Observable} from 'rxjs';
+import {SearchUsersState} from '../search-users/search-users.store';
+import {SearchUsersService} from '../search-users/search-users.service';
+import SearchUsersQuery from '../search-users/search-users.query';
+import {ActivatedRoute} from '@angular/router';
 import {startWith, switchMap, tap} from 'rxjs/operators';
+import {combineLatest, Observable} from 'rxjs';
 import FriendResponse from '../user-profile-page/FriendResponse';
 import {FormControl} from '@angular/forms';
-import SearchUsersQuery from './search-users.query';
+import {UserService} from '../user.service';
+import UserProfilePublicResponse from '../user-profile-page/UserProfilePublicResponse';
+import {plainToClass} from 'class-transformer';
 
 @Component({
-  selector: 'app-search-users',
-  templateUrl: './search-users.component.html',
-  styleUrls: ['./search-users.component.scss']
+  selector: 'app-friends',
+  templateUrl: './friends.component.html'
 })
-export class SearchUsersComponent implements OnInit, OnDestroy {
+export class FriendsComponent implements OnInit, OnDestroy {
   pagination$: Observable<PaginationResponse<FriendResponse>>;
   name = new FormControl('');
   lastName = new FormControl('');
+  userId: number;
+  user: UserProfilePublicResponse;
 
   constructor(@Inject(USERS_PAGINATOR) public paginatorRef: PaginatorPlugin<SearchUsersState>,
               protected searchUsersService: SearchUsersService,
-              protected searchUsersQuery: SearchUsersQuery) {}
+              protected searchUsersQuery: SearchUsersQuery,
+              private userService: UserService,
+              protected activatedRoute: ActivatedRoute) {
+    this.userId = parseInt(activatedRoute.snapshot.paramMap.get('id'), 10) || 0;
+  }
 
   ngOnInit() {
+    this.userService.getUserProfile(this.userId)
+      .subscribe(response => this.user = plainToClass(UserProfilePublicResponse, response));
+
     const nameFilter = this.name.valueChanges.pipe(startWith(''));
     const lastNameFilter = this.lastName.valueChanges.pipe(startWith(''));
 
@@ -38,14 +50,14 @@ export class SearchUsersComponent implements OnInit, OnDestroy {
         ))
       .pipe(
         switchMap(([page, [name, lastName]]) => {
-          const req = () => this.searchUsersService.fetchUsers({
+          const req = () => this.searchUsersService.fetchFriends(this.userId, {
               pageSize: 10,
               pageNumber: page,
             },
             name, lastName);
           return this.paginatorRef.getPage(req);
         })
-    );
+      );
   }
 
   ngOnDestroy() {
