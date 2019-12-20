@@ -11,14 +11,15 @@
                src="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png"/>
           <app-friend-handling-button [userId]="userProfile.id"
                                       [relationToViewer]="relationToViewer?.toString()"></app-friend-handling-button>
-          <div class="block-header">Friends</div>
+          <div class="block-header"><a routerLink="/friends/{{userProfile.id}}">Friends</a></div>
           <ul class="user-profile-friends-preview-list p-1 border-top">
             <!--          TODO add friends count-->
-            <li *ngFor="let friend of userProfile?.friends" class="friend-preview">
-              <img class="img-fluid rounded-circle user-avatar-min float-left" alt="user-avatar"
+            <li *ngFor="let friend of userProfile?.friends" class="friend-preview mt-1">
+              <img class="img-fluid rounded-circle user-avatar-min" alt="user-avatar"
                    src="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png"/>
               <a [routerLink]="['/profile', friend.id]"><span>{{friend.fullName}}</span></a>
             </li>
+            <li class="text-center">...</li>
           </ul>
         </div>
       </div>
