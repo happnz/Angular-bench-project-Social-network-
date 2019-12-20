@@ -16,10 +16,22 @@ export class SearchUsersService {
 
   constructor(private http: HttpClient) { }
 
-  fetchUsers(paginationQuery: PaginationQuery, name?: string, lastName?: string): Observable<PaginationResponse<FriendResponse>> {
+  fetchUsers(type: 'ANY' | 'FRIENDS',
+             paginationQuery: PaginationQuery,
+             name?: string,
+             lastName?: string): Observable<PaginationResponse<FriendResponse>> {
+    let url;
+    switch (type) {
+      case 'ANY':
+        url = `${this.apiUrl}/users/search`;
+        break;
+      case 'FRIENDS':
+        url = `${this.apiUrl}/friends`;
+        break;
+    }
     const params = {};
     Object.assign(params, paginationQuery, {name, lastName});
-    return this.http.get<PaginationResponse<FriendResponse>>(`${this.apiUrl}/users/search`, {params})
+    return this.http.get<PaginationResponse<FriendResponse>>(url, {params})
       .pipe(
         map(res => {
           res.data = res.data.map(friendResponse => plainToClass(FriendResponse, friendResponse));

@@ -24,6 +24,7 @@ import LoggedOutGuard from './logged-out-guard';
 import { SearchUsersComponent } from './search-users/search-users.component';
 import {USERS_PAGINATOR} from './search-users/users-paginator';
 import { UserPreviewComponent } from './user-preview/user-preview.component';
+import LoggedInGuard from './logged-in-guard';
 
 const routes: Routes = [{path: '', pathMatch: 'full', redirectTo: '/sign-in'},
   {path: 'error', component: ErrorPageComponent},
@@ -31,8 +32,9 @@ const routes: Routes = [{path: '', pathMatch: 'full', redirectTo: '/sign-in'},
   {path: 'sign-in', component: SignInComponent, canActivate: [LoggedOutGuard]},
   {path: 'profile', redirectTo: 'profile/'},
   {path: 'profile/:id', component: UserProfilePageComponent},
-  {path: 'news', component: NewsComponent},
-  {path: 'search', component: SearchUsersComponent}];
+  {path: 'news', component: NewsComponent, canActivate: [LoggedInGuard]},
+  {path: 'search', component: SearchUsersComponent, canActivate: [LoggedInGuard], data: { type: 'ANY' }},
+  {path: 'friends', component: SearchUsersComponent, canActivate: [LoggedInGuard], data: { type: 'FRIENDS' }}];
 
 @NgModule({
   declarations: [

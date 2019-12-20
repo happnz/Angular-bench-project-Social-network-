@@ -8,6 +8,7 @@ import {startWith, switchMap, tap} from 'rxjs/operators';
 import FriendResponse from '../user-profile-page/FriendResponse';
 import {FormControl} from '@angular/forms';
 import SearchUsersQuery from './search-users.query';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-search-users',
@@ -21,9 +22,11 @@ export class SearchUsersComponent implements OnInit, OnDestroy {
 
   constructor(@Inject(USERS_PAGINATOR) public paginatorRef: PaginatorPlugin<SearchUsersState>,
               private searchUsersService: SearchUsersService,
-              private searchUsersQuery: SearchUsersQuery) {}
+              private searchUsersQuery: SearchUsersQuery,
+              private activatedRoute: ActivatedRoute) {}
 
   ngOnInit() {
+    const type: RouteType = this.activatedRoute.snapshot.data.type || 'ANY';
     const nameFilter = this.name.valueChanges.pipe(startWith(''));
     const lastNameFilter = this.lastName.valueChanges.pipe(startWith(''));
 
@@ -38,7 +41,7 @@ export class SearchUsersComponent implements OnInit, OnDestroy {
         ))
       .pipe(
         switchMap(([page, [name, lastName]]) => {
-          const req = () => this.searchUsersService.fetchUsers({
+          const req = () => this.searchUsersService.fetchUsers(type, {
               pageSize: 10,
               pageNumber: page,
             },
@@ -49,7 +52,13 @@ export class SearchUsersComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.paginatorRef.destroy();
+    this.paginatorRef.clearCache({ clearStore: true});
+    this.paginatorRef.setLoading(true);
   }
 
+}
+
+enum RouteType {
+  FRIENDS = 'FRIENDS',
+  ANY = 'ANY'
 }
