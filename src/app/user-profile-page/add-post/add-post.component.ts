@@ -1,5 +1,5 @@
-import {Component, EventEmitter, OnChanges, OnInit, Output} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {Component, EventEmitter, Output} from '@angular/core';
+import {FormControl, Validators} from '@angular/forms';
 import {UserService} from '../../user.service';
 
 @Component({
@@ -15,11 +15,9 @@ export class AddPostComponent {
     Validators.minLength(1),
     Validators.maxLength(this.maxLength)
   ]);
-  form: FormGroup;
   @Output() postAdded = new EventEmitter();
 
   constructor(private userService: UserService) {
-    this.form = new FormGroup({text: this.nameControl});
   }
 
   submitPost() {

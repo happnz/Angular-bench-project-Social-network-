@@ -5,8 +5,8 @@
             [formControl]="nameControl"></textarea>
   </div>
   <div>
-    <button class="btn btn-info" [disabled]="form.invalid" (click)="submitPost()">Submit</button>
+    <button class="btn btn-info" [disabled]="nameControl.invalid" (click)="submitPost()">Submit</button>
     <span class="float-right"
-          [ngClass]="charactersLeft < 0 ? 'text-danger' : ''">Characters left: {{charactersLeft}}</span>
+          [class.text-danger]="charactersLeft < 0">Characters left: {{charactersLeft}}</span>
   </div>
 </div>
