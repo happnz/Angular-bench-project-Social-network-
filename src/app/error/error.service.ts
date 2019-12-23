@@ -20,7 +20,8 @@ export class ErrorService {
     } else if (err.status >= 500) {
       this.notificationService.showError('Unexpected server error');
     } else if (err.status === 404) {
-      this.notificationService.showError(err.status + ' ' + err.statusText);
+      this.notificationService.showError(err.status + ' ' + err.error);
+      this.router.navigate(['/']);
     } else if (err.status >= 400) {
       this.notificationService.showError('Error: ' + err.error);
     }
