@@ -1,5 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import FriendResponse from '../FriendResponse';
+import UserNotificationsQuery from './user-notifications.query';
+import {UserNotificationsService} from './user-notifications.service';
 import {UserService} from '../../user.service';
 
 @Component({
@@ -7,14 +9,34 @@ import {UserService} from '../../user.service';
   templateUrl: './notifications.component.html',
   styleUrls: ['./notifications.component.scss']
 })
-export class NotificationsComponent implements OnInit {
-  @Input() friendRequests: FriendResponse[];
+export class NotificationsComponent implements OnInit, OnDestroy {
+  friendRequests: FriendResponse[];
+  checkIntervalMs = 7000;
+  timerId: number;
 
   dropdownToggled = false;
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService,
+              private notificationsService: UserNotificationsService,
+              private notificationsQuery: UserNotificationsQuery) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.fetchNotifications();
+    this.timerId = setInterval(() => this.fetchNotifications(), this.checkIntervalMs);
+
+    this.notificationsQuery.selectAll()
+      .subscribe(friendRequests => {
+        this.friendRequests = friendRequests;
+      });
+  }
+
+  ngOnDestroy() {
+    clearInterval(this.timerId);
+  }
+
+  private fetchNotifications() {
+    this.notificationsService.fetchNotifications();
+  }
 
   toggleNotificationDropdown() {
     this.dropdownToggled = !this.dropdownToggled;
@@ -23,7 +45,7 @@ export class NotificationsComponent implements OnInit {
   handleFriendRequest(action: 'DECLINE' | 'ACCEPT', friendId: number) {
     this.userService.friendRequest(action, friendId)
       .subscribe(_ => {
-        this.friendRequests = this.friendRequests.filter(request => request.id !== friendId);
+        this.notificationsService.removeNotification(friendId);
       });
   }
 }

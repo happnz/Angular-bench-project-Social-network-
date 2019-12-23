@@ -1,4 +1,5 @@
 @import "../../../assets/scss/base/variables";
+@import "../../../assets/scss/base/mixins";
 
 .user-notifications {
   position: fixed;
@@ -9,7 +10,7 @@
 .user-notifications__header {
   cursor: pointer;
   background-color: $primary-lighter;
-  border-radius: 5px;
+  border-radius: $border-radius
 }
 
 .user-notifications__header.with-notifications {
@@ -17,7 +18,8 @@
 }
 
 ul {
-  list-style-type: none;
+  @include reset-list;
+  text-align: right;
 }
 
 .user-notifications__body {
