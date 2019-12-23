@@ -1,5 +1,6 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {UserService} from '../../user.service';
+import {NotificationService} from '../../notification.service';
 
 @Component({
   selector: 'app-friend-handling-button',
@@ -34,7 +35,8 @@ export class FriendHandlingButtonComponent implements OnChanges {
     }
   };
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService,
+              private notificationService: NotificationService) { }
 
   ngOnChanges(changes: SimpleChanges): void {
     switch (this.relationToViewer) {
@@ -73,7 +75,7 @@ export class FriendHandlingButtonComponent implements OnChanges {
 
   handleClick() {
     switch (this.relationToViewer) {
-      case 'FRIEND':
+      case 'FRIEND_HOVER':
         this.removeFriend();
         break;
       case 'USER':
@@ -88,6 +90,7 @@ export class FriendHandlingButtonComponent implements OnChanges {
   removeFriend() {
     this.userService.deleteFriend(this.userId)
       .subscribe(_ => {
+        this.notificationService.showSuccess('Friend removed');
         this.relationToViewer = 'USER';
       });
   }
@@ -95,6 +98,7 @@ export class FriendHandlingButtonComponent implements OnChanges {
   sendFriendRequest() {
     this.userService.friendRequest('SEND', this.userId)
       .subscribe(_ => {
+        this.notificationService.showSuccess('Friend request sent');
         this.relationToViewer = 'REQUEST_SENT'; // TODO 'FOLLOWER' relation
       });
   }
@@ -102,6 +106,7 @@ export class FriendHandlingButtonComponent implements OnChanges {
   cancelFriendRequest() {
     this.userService.friendRequest('CANCEL', this.userId)
       .subscribe(_ => {
+        this.notificationService.showSuccess('Friend request cancelled');
         this.relationToViewer = 'USER';
       });
   }

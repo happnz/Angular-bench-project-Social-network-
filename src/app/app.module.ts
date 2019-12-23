@@ -25,6 +25,8 @@ import { SearchUsersComponent } from './search-users/search-users.component';
 import { UserPreviewComponent } from './user-preview/user-preview.component';
 import LoggedInGuard from './logged-in-guard';
 import { FriendsComponent } from './friends/friends.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatSnackBarModule} from '@angular/material';
 
 const routes: Routes = [{path: '', pathMatch: 'full', redirectTo: '/sign-in'},
   {path: 'error', component: ErrorPageComponent},
@@ -63,7 +65,9 @@ const routes: Routes = [{path: '', pathMatch: 'full', redirectTo: '/sign-in'},
     FormsModule,
     HttpClientModule,
     RouterModule.forRoot(routes),
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    MatSnackBarModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,
