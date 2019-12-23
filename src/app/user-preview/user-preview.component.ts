@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import FriendResponse from '../user-profile-page/FriendResponse';
+import FriendWithRelationResponse from '../user-profile-page/FriendWithRelationResponse';
 
 @Component({
   selector: 'app-user-preview',
@@ -7,7 +8,7 @@ import FriendResponse from '../user-profile-page/FriendResponse';
   styleUrls: ['./user-preview.component.scss']
 })
 export class UserPreviewComponent implements OnInit {
-  @Input() user: FriendResponse;
+  @Input() user: FriendWithRelationResponse;
 
   constructor() { }
 

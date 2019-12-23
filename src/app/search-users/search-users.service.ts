@@ -4,9 +4,9 @@ import PaginationQuery from '../shared/PaginationQuery';
 import {environment} from '../../environments/environment';
 import {Observable} from 'rxjs';
 import {PaginationResponse} from '@datorama/akita';
-import FriendResponse from '../user-profile-page/FriendResponse';
 import {map} from 'rxjs/operators';
 import {plainToClass} from 'class-transformer';
+import FriendWithRelationResponse from '../user-profile-page/FriendWithRelationResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -18,13 +18,13 @@ export class SearchUsersService {
 
   fetchUsers(paginationQuery: PaginationQuery,
              name?: string,
-             lastName?: string): Observable<PaginationResponse<FriendResponse>> {
+             lastName?: string): Observable<PaginationResponse<FriendWithRelationResponse>> {
     const params = {};
     Object.assign(params, paginationQuery, {name, lastName});
-    return this.http.get<PaginationResponse<FriendResponse>>(`${this.apiUrl}/users/search`, {params})
+    return this.http.get<PaginationResponse<FriendWithRelationResponse>>(`${this.apiUrl}/users/search`, {params})
       .pipe(
         map(res => {
-          res.data = res.data.map(friendResponse => plainToClass(FriendResponse, friendResponse));
+          res.data = res.data.map(friendResponse => plainToClass(FriendWithRelationResponse, friendResponse));
           return res;
         })
       );
@@ -33,16 +33,16 @@ export class SearchUsersService {
   fetchFriends(userId: number,
                paginationQuery: PaginationQuery,
                name?: string,
-               lastName?: string): Observable<PaginationResponse<FriendResponse>> {
+               lastName?: string): Observable<PaginationResponse<FriendWithRelationResponse>> {
     const params = {};
     if (userId === 0) {
       userId = null;
     }
     Object.assign(params, paginationQuery, {userId, name, lastName});
-    return this.http.get<PaginationResponse<FriendResponse>>(`${this.apiUrl}/friends`, {params})
+    return this.http.get<PaginationResponse<FriendWithRelationResponse>>(`${this.apiUrl}/friends`, {params})
       .pipe(
         map(res => {
-          res.data = res.data.map(friendResponse => plainToClass(FriendResponse, friendResponse));
+          res.data = res.data.map(friendResponse => plainToClass(FriendWithRelationResponse, friendResponse));
           return res;
         })
       );

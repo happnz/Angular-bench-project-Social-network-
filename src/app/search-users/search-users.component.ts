@@ -5,9 +5,9 @@ import {SearchUsersState} from './search-users.store';
 import {SearchUsersService} from './search-users.service';
 import {combineLatest, Observable} from 'rxjs';
 import {startWith, switchMap, tap} from 'rxjs/operators';
-import FriendResponse from '../user-profile-page/FriendResponse';
 import {FormControl} from '@angular/forms';
 import SearchUsersQuery from './search-users.query';
+import FriendWithRelationResponse from '../user-profile-page/FriendWithRelationResponse';
 
 @Component({
   selector: 'app-search-users',
@@ -15,7 +15,7 @@ import SearchUsersQuery from './search-users.query';
   styleUrls: ['./search-users.component.scss']
 })
 export class SearchUsersComponent implements OnInit, OnDestroy {
-  pagination$: Observable<PaginationResponse<FriendResponse>>;
+  pagination$: Observable<PaginationResponse<FriendWithRelationResponse>>;
   name = new FormControl('');
   lastName = new FormControl('');
 

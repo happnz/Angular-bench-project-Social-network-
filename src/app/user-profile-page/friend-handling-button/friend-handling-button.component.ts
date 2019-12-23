@@ -11,6 +11,28 @@ export class FriendHandlingButtonComponent implements OnChanges {
   @Input() userId: number;
   buttonClass: string;
   buttonText: string;
+  private buttonValues = {
+    FRIEND: {
+      text: 'You are friends',
+      class: 'btn-secondary'
+    },
+    USER: {
+      text: 'Add as a friend',
+      class: 'btn-info'
+    },
+    REQUEST_SENT: {
+      text: 'Friend request sent',
+      class: 'btn-info'
+    },
+    REQUEST_SENT_HOVER: {
+      text: 'Cancel sent request',
+      class: 'btn-danger'
+    },
+    FRIEND_HOVER: {
+      text: 'Remove from friends',
+      class: 'btn-danger'
+    }
+  };
 
   constructor(private userService: UserService) { }
 
@@ -30,19 +52,23 @@ export class FriendHandlingButtonComponent implements OnChanges {
   }
 
   mouseEnter() {
-    if (this.relationToViewer !== 'FRIEND') {
+    if (this.relationToViewer === 'FRIEND') {
+      this.relationToViewer = 'FRIEND_HOVER';
+    } else if (this.relationToViewer === 'REQUEST_SENT') {
+      this.relationToViewer = 'REQUEST_SENT_HOVER';
+    } else {
       return;
     }
-    this.buttonText = 'Remove from friends';
-    this.buttonClass = 'btn-danger';
   }
 
   mouseLeave() {
-    if (this.relationToViewer !== 'FRIEND') {
+    if (this.relationToViewer === 'FRIEND_HOVER') {
+      this.relationToViewer = 'FRIEND';
+    } else if (this.relationToViewer === 'REQUEST_SENT_HOVER') {
+      this.relationToViewer = 'REQUEST_SENT';
+    } else {
       return;
     }
-    this.buttonText = 'You are friends';
-    this.buttonClass = 'btn-secondary';
   }
 
   handleClick() {
@@ -53,6 +79,9 @@ export class FriendHandlingButtonComponent implements OnChanges {
       case 'USER':
         this.sendFriendRequest();
         break;
+      case 'REQUEST_SENT_HOVER':
+        this.cancelFriendRequest();
+        break;
     }
   }
 
@@ -60,17 +89,20 @@ export class FriendHandlingButtonComponent implements OnChanges {
     this.userService.deleteFriend(this.userId)
       .subscribe(_ => {
         this.relationToViewer = 'USER';
-        this.buttonText = 'Add as a friend';
-        this.buttonClass = 'btn-info';
       });
   }
 
   sendFriendRequest() {
     this.userService.friendRequest('SEND', this.userId)
       .subscribe(_ => {
+        this.relationToViewer = 'REQUEST_SENT'; // TODO 'FOLLOWER' relation
+      });
+  }
+
+  cancelFriendRequest() {
+    this.userService.friendRequest('CANCEL', this.userId)
+      .subscribe(_ => {
         this.relationToViewer = 'USER';
-        this.buttonText = 'Friend request sent'; // TODO 'FOLLOWER' relation
-        this.buttonClass = 'btn-info';
       });
   }
 }

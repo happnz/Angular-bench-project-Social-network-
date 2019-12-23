@@ -2,5 +2,5 @@
         (mouseenter)="mouseEnter()"
         (mouseleave)="mouseLeave()"
         (click)="handleClick()"
-        class="btn {{buttonClass}} not-rounded mt-1"
-        style="width: 100%">{{buttonText}}</button>
+        class="btn {{buttonValues[relationToViewer].class}} not-rounded mt-1"
+        style="width: 100%">{{buttonValues[relationToViewer].text}}</button>

@@ -4,8 +4,15 @@
       <img class="user-preview--avatar" src="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png" alt="{{user.fullName}}">
     </div>
     <div class="col">
-      <div class="card-body">
-        <a routerLink="/profile/{{user.id}}">{{user.fullName}}</a>
+      <div class="row">
+        <div class="col-6">
+          <a routerLink="/profile/{{user.id}}">{{user.fullName}}</a>
+        </div>
+        <div class="col-6">
+          <app-friend-handling-button
+            [relationToViewer]="user.relation"
+            [userId]="user.id"></app-friend-handling-button>
+        </div>
       </div>
     </div>
   </div>
