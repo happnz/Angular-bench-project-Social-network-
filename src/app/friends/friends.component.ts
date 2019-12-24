@@ -12,13 +12,14 @@ import {FormControl} from '@angular/forms';
 import {UserService} from '../user.service';
 import UserProfilePublicResponse from '../user-profile-page/UserProfilePublicResponse';
 import {plainToClass} from 'class-transformer';
+import FriendWithRelationResponse from '../user-profile-page/FriendWithRelationResponse';
 
 @Component({
   selector: 'app-friends',
   templateUrl: './friends.component.html'
 })
 export class FriendsComponent implements OnInit, OnDestroy {
-  pagination$: Observable<PaginationResponse<FriendResponse>>;
+  pagination$: Observable<PaginationResponse<FriendWithRelationResponse>>;
   name = new FormControl('');
   lastName = new FormControl('');
   userId: number;
@@ -26,7 +27,7 @@ export class FriendsComponent implements OnInit, OnDestroy {
 
   constructor(@Inject(USERS_PAGINATOR) public paginatorRef: PaginatorPlugin<SearchUsersState>,
               protected searchUsersService: SearchUsersService,
-              protected searchUsersQuery: SearchUsersQuery,
+              public searchUsersQuery: SearchUsersQuery,
               private userService: UserService,
               protected activatedRoute: ActivatedRoute) {
     this.userId = parseInt(activatedRoute.snapshot.paramMap.get('id'), 10) || 0;

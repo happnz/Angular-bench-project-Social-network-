@@ -12,7 +12,7 @@ export class FriendHandlingButtonComponent implements OnChanges {
   @Input() userId: number;
   buttonClass: string;
   buttonText: string;
-  private buttonValues = {
+  buttonValues = {
     FRIEND: {
       text: 'You are friends',
       class: 'btn-secondary'

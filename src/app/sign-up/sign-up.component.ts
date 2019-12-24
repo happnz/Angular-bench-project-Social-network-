@@ -12,12 +12,12 @@ import {SessionQuery} from '../state/session/session.query';
 })
 export class SignUpComponent implements OnInit {
   model: User;
-  private isLoading$: Observable<boolean>;
-  private error$: Observable<HttpErrorResponse>;
+  isLoading$: Observable<boolean>;
+  error$: Observable<HttpErrorResponse>;
 
   constructor(
     private sessionService: SessionService,
-    private sessionQuery: SessionQuery
+    public sessionQuery: SessionQuery
   ) { }
 
   ngOnInit() {

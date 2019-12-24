@@ -13,7 +13,7 @@ export class NewsComponent implements OnInit, OnDestroy {
     pageSize: 10
   };
 
-  private posts: PostWithAuthorResponse[] = [];
+  posts: PostWithAuthorResponse[] = [];
   private allLoaded = false;
   private isLoading = false;
   private listener = null;

@@ -20,8 +20,8 @@ export class SearchUsersComponent implements OnInit, OnDestroy {
   lastName = new FormControl('');
 
   constructor(@Inject(USERS_PAGINATOR) public paginatorRef: PaginatorPlugin<SearchUsersState>,
-              protected searchUsersService: SearchUsersService,
-              protected searchUsersQuery: SearchUsersQuery) {}
+              public searchUsersService: SearchUsersService,
+              public searchUsersQuery: SearchUsersQuery) {}
 
   ngOnInit() {
     const nameFilter = this.name.valueChanges.pipe(startWith(''));
