@@ -1,5 +1,5 @@
 <div class="container">
-  <app-loading *ngIf="loadingStatus.isLoading(); else component"></app-loading>
+  <app-loading *ngIf="this.query.selectLoading() | async; else component"></app-loading>
   <ng-template #component>
     <div class="row">
       <div class="col-12 col-md-3 border-light p-0">
@@ -12,14 +12,14 @@
           <app-friend-handling-button [userId]="userProfile.id"
                                       [relationToViewer]="relationToViewer?.toString()"></app-friend-handling-button>
           <div class="block-header"><a routerLink="/friends/{{userProfile.id}}">Friends</a></div>
-          <ul class="user-profile-friends-preview-list p-1 border-top">
+          <ul *appShowIfLoggedIn="true" class="user-profile-friends-preview-list p-1 border-top">
             <!--          TODO add friends count-->
             <li *ngFor="let friend of userProfile?.friends" class="friend-preview mt-1">
               <img class="img-fluid rounded-circle user-avatar-min" alt="user-avatar"
                    src="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png"/>
               <a [routerLink]="['/profile', friend.id]"><span>{{friend.fullName}}</span></a>
             </li>
-            <li class="text-center">...</li>
+          <li class="text-center">...</li>
           </ul>
         </div>
       </div>
@@ -27,28 +27,28 @@
         <div class="user-profile-posts">
           <div class="block-header border">
             <span>{{userProfile.fullName}}'s posts</span>
-            <span *ngIf="relationToViewer == 'PERSONAL'" class="float-right">
-              <i (click)="togglePostInput()" class="fa fa-plus pointer-event" aria-hidden="true" style="cursor: pointer"></i>
-            </span>
+              <span *appShowForRelationRoles="relationToViewer in [relations.PERSONAL]"
+                    class="float-right">
+                <i (click)="togglePostInput()" class="fa fa-plus pointer-event" aria-hidden="true"
+                   style="cursor: pointer"></i>
+              </span>
           </div>
           <app-add-post *ngIf="postInputToggled" (postAdded)="handlePostAdded()"></app-add-post>
-          <ul *ngIf="relationToViewer == 'FRIEND' || relationToViewer == 'PERSONAL'; else unallowed"
+
+          <ul *appShowForRelationRoles="relationToViewer in [relations.PERSONAL, relations.FRIEND]; showMessage: true; elseMessage: 'You are not allowed to see this users\'s posts'"
               class="user-posts-list">
             <li *ngFor="let post of userProfile.posts">
               <app-user-post
-                [isPersonal]="relationToViewer == 'PERSONAL'"
+                [isPersonal]="relationToViewer == relations.PERSONAL"
                 [authorId]="userProfile.id"
                 [id]="post.id"
                 [authorFullName]="userProfile.fullName"
                 [createdAt]="post.createdAt"
                 [updatedAt]="post.updatedAt"
                 [text]="post.text"
-              (postDeleted)="handlePostDeleted()"></app-user-post>
+                (postDeleted)="handlePostDeleted()"></app-user-post>
             </li>
           </ul>
-          <ng-template #unallowed>
-            <div class="no-content-placeholder">You are not allowed to see this user's posts</div>
-          </ng-template>
         </div>
       </div>
     </div>

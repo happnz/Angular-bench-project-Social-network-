@@ -1,25 +1,23 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import UserProfilePublicResponse from './UserProfilePublicResponse';
 import {UserService} from '../user.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Relation} from './Relation';
-import UserProfileForUsersResponse from './UserProfileForUsersResponse';
-import UserProfileForFriendsResponse from './UserProfileForFriendsResponse';
-import UserProfilePersonalResponse from './UserProfilePersonalResponse';
-import FriendResponse from './FriendResponse';
 import {catchError} from 'rxjs/operators';
-import LoadingStatus from '../shared/LoadingStatus';
+import {Query, Store} from '@datorama/akita';
 
 @Component({
   selector: 'app-user-profile-page',
   templateUrl: './user-profile-page.component.html',
   styleUrls: ['./user-profile-page.component.scss']
 })
-export class UserProfilePageComponent implements OnInit {
-  loadingStatus = new LoadingStatus();
-  userProfile: UserProfilePublicResponse | UserProfileForUsersResponse | UserProfileForFriendsResponse | UserProfilePersonalResponse;
+export class UserProfilePageComponent implements OnInit, OnDestroy {
+  userProfile: any;
   relationToViewer: Relation;
   postInputToggled = false;
+  relations = Relation;
+  store: Store;
+  query: Query<any>;
 
   constructor(private userService: UserService,
               private route: ActivatedRoute,
@@ -28,6 +26,8 @@ export class UserProfilePageComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.store = new Store<any>({}, {name: 'user-page'});
+    this.query = new Query<any>(this.store);
     const userId = +this.route.snapshot.paramMap.get('id');
     this.fetchUserProfile(userId);
     this.route.params.subscribe(params => {
@@ -36,42 +36,25 @@ export class UserProfilePageComponent implements OnInit {
     });
   }
 
+  ngOnDestroy() {
+    this.store.destroy();
+  }
+
   fetchUserProfile(userId: number) {
-    this.loadingStatus.startLoading();
+    this.store.setLoading(true);
 
     this.userService.getUserProfile(userId)
       .pipe(
         catchError((err => {
-          this.loadingStatus.finishLoading(err);
+          this.store.setLoading(false);
+          this.store.setError(err);
           return null;
         }))
       )
       .subscribe(data => {
-        switch (data.relation) {
-          case Relation.USER:
-            this.userProfile = new UserProfileForUsersResponse(data.id, data.name, data.lastName,
-              data.friends.map(friend => new FriendResponse(friend.id, friend.name, friend.lastName)));
-            this.relationToViewer = data.relation;
-            break;
-          case Relation.FRIEND:
-            this.userProfile = new UserProfileForFriendsResponse(data.id, data.name, data.lastName,
-              data.friends.map(friend => new FriendResponse(friend.id, friend.name, friend.lastName)),
-              data.posts);
-            this.relationToViewer = data.relation;
-            break;
-          case Relation.PERSONAL:
-            this.userProfile =
-              new UserProfilePersonalResponse(data.id, data.name, data.lastName,
-                data.friends.map(friend => new FriendResponse(friend.id, friend.name, friend.lastName)),
-                data.posts,
-                data.friendRequests.map(friend => new FriendResponse(friend.id, friend.name, friend.lastName)));
-            this.relationToViewer = data.relation;
-            break;
-          default:
-            this.userProfile = new UserProfilePublicResponse(data.id, data.name, data.lastName);
-            break;
-        }
-        this.loadingStatus.finishLoading();
+        this.userProfile = data as UserProfilePublicResponse;
+        this.relationToViewer = (data as any).relation as Relation;
+        this.store.setLoading(false);
       });
   }
 

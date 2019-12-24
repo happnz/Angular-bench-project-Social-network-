@@ -27,6 +27,7 @@ import LoggedInGuard from './logged-in-guard';
 import { FriendsComponent } from './friends/friends.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatSnackBarModule} from '@angular/material';
+import {NoContentPlaceHolderComponent, ShowForRelationRolesDirective} from './show-for-relation-roles.directive';
 
 const routes: Routes = [{path: '', pathMatch: 'full', redirectTo: '/sign-in'},
   {path: 'error', component: ErrorPageComponent},
@@ -58,7 +59,9 @@ const routes: Routes = [{path: '', pathMatch: 'full', redirectTo: '/sign-in'},
     ShowIfLoggedInDirective,
     SearchUsersComponent,
     UserPreviewComponent,
-    FriendsComponent
+    FriendsComponent,
+    ShowForRelationRolesDirective,
+    NoContentPlaceHolderComponent
   ],
   imports: [
     BrowserModule,
@@ -74,6 +77,7 @@ const routes: Routes = [{path: '', pathMatch: 'full', redirectTo: '/sign-in'},
     useClass: InterceptorService,
     multi: true
   }],
+  entryComponents: [NoContentPlaceHolderComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
