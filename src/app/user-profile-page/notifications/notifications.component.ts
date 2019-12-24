@@ -1,6 +1,6 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import FriendResponse from '../FriendResponse';
-import UserNotificationsQuery from './user-notifications.query';
+import {UserNotificationsQuery} from './user-notifications.query';
 import {UserNotificationsService} from './user-notifications.service';
 import {UserService} from '../../user.service';
 

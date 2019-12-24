@@ -6,7 +6,7 @@ import {SearchUsersService} from './search-users.service';
 import {combineLatest, Observable} from 'rxjs';
 import {startWith, switchMap, tap} from 'rxjs/operators';
 import {FormControl} from '@angular/forms';
-import SearchUsersQuery from './search-users.query';
+import {SearchUsersQuery} from './search-users.query';
 import FriendWithRelationResponse from '../user-profile-page/FriendWithRelationResponse';
 
 @Component({
