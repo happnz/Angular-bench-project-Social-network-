@@ -24,6 +24,7 @@ pipelines:
           caches:
             - node
           script:
+            - npm install
             - npm run build-prod
             - cp Procfile server.js dist
             - tar czf application.tgz dist
