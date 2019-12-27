@@ -26,7 +26,7 @@ pipelines:
           script:
             - npm install
             - npm run build-prod
-            - cp Procfile server.js dist
+            - cp deploy/* dist
             - tar czf application.tgz dist
           artifacts:
             - application.tgz

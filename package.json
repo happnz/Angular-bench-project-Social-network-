@@ -7,7 +7,6 @@
     "build": "ng build",
     "test": "ng test",
     "build-prod": "ng build --prod",
-    "run-prod": "node server.js",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
