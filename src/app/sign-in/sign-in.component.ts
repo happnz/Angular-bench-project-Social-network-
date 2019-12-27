@@ -2,7 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import {Observable} from 'rxjs';
 import {SessionService, SignInBody} from '../session.service';
 import {SessionQuery} from '../state/session/session.query';
-import {HttpErrorResponse} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {SessionStore} from '../state/session/session.store';
+import {UserService} from '../user.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-sign-in',
@@ -14,9 +17,16 @@ export class SignInComponent implements OnInit {
   isLoading$: Observable<boolean>;
   isCompleted$: Observable<boolean>;
   error$: Observable<HttpErrorResponse>;
+  private sessionService: SessionService;
+  public sessionQuery: SessionQuery;
 
-  constructor(private sessionService: SessionService,
-              public sessionQuery: SessionQuery) { }
+  constructor(userService: UserService,
+              http: HttpClient,
+              router: Router) {
+    const store = new SessionStore();
+    this.sessionService = new SessionService(store, userService, http, router);
+    this.sessionQuery = new SessionQuery(store);
+  }
 
   ngOnInit() {
     this.model = new SignInBody('', '');
