@@ -1,0 +1,24 @@
+pipelines:
+  branches:
+    master:
+      - step:
+          name: Build angular project for production
+          image: node:10.15.3
+          caches:
+            - node
+          script:
+            - npm install
+            - npm run build-prod
+            - cp deploy/* dist
+            - tar czf application.tgz dist
+          artifacts:
+            - application.tgz
+      - step:
+          name: Deploy to staging
+          deployment: staging
+          script:
+            - pipe: atlassian/heroku-deploy:0.1.1
+              variables:
+                HEROKU_API_KEY: $HEROKU_API_KEY
+                HEROKU_APP_NAME: $HEROKU_APP_NAME
+                ZIP_FILE: "application.tgz"

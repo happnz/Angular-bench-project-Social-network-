@@ -3,7 +3,7 @@ import {UserNotificationsState, UserNotificationsStore} from './user-notificatio
 import {Injectable} from '@angular/core';
 
 @Injectable({ providedIn: 'root' })
-export default class UserNotificationsQuery extends QueryEntity<UserNotificationsState> {
+export class UserNotificationsQuery extends QueryEntity<UserNotificationsState> {
 
   constructor(protected store: UserNotificationsStore) {
     super(store);

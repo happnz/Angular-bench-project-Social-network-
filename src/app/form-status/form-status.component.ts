@@ -11,7 +11,7 @@ export class FormStatusComponent implements OnInit {
   @Input() error$: Observable<HttpErrorResponse>;
   @Input() successCondition$: Observable<boolean>;
   @Input() loading$: Observable<boolean>;
-  private errorText: string;
+  errorText: string;
 
   constructor() { }
 

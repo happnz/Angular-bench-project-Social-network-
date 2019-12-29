@@ -1,5 +1,5 @@
 import {inject, InjectionToken} from '@angular/core';
-import SearchUsersQuery from './search-users.query';
+import {SearchUsersQuery} from './search-users.query';
 import {PaginatorPlugin} from '@datorama/akita';
 
 export const USERS_PAGINATOR = new InjectionToken('USERS_PAGINATOR', {

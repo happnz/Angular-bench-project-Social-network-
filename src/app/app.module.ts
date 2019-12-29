@@ -20,13 +20,14 @@ import { NewsComponent } from './news/news.component';
 import { UserMenuComponent } from './user-menu/user-menu.component';
 import { FormStatusComponent } from './form-status/form-status.component';
 import { ShowIfLoggedInDirective } from './show-if-logged-in.directive';
-import LoggedOutGuard from './logged-out-guard';
+import { LoggedOutGuard } from './logged-out-guard';
 import { SearchUsersComponent } from './search-users/search-users.component';
 import { UserPreviewComponent } from './user-preview/user-preview.component';
-import LoggedInGuard from './logged-in-guard';
+import { LoggedInGuard } from './logged-in-guard';
 import { FriendsComponent } from './friends/friends.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatSnackBarModule} from '@angular/material';
+import {NoContentPlaceHolderComponent, ShowForRelationRolesDirective} from './show-for-relation-roles.directive';
 
 const routes: Routes = [{path: '', pathMatch: 'full', redirectTo: '/sign-in'},
   {path: 'error', component: ErrorPageComponent},
@@ -58,7 +59,9 @@ const routes: Routes = [{path: '', pathMatch: 'full', redirectTo: '/sign-in'},
     ShowIfLoggedInDirective,
     SearchUsersComponent,
     UserPreviewComponent,
-    FriendsComponent
+    FriendsComponent,
+    ShowForRelationRolesDirective,
+    NoContentPlaceHolderComponent
   ],
   imports: [
     BrowserModule,
@@ -74,6 +77,7 @@ const routes: Routes = [{path: '', pathMatch: 'full', redirectTo: '/sign-in'},
     useClass: InterceptorService,
     multi: true
   }],
+  entryComponents: [NoContentPlaceHolderComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

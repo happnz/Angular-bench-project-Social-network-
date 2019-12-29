@@ -6,7 +6,7 @@ import {SearchUsersService} from './search-users.service';
 import {combineLatest, Observable} from 'rxjs';
 import {startWith, switchMap, tap} from 'rxjs/operators';
 import {FormControl} from '@angular/forms';
-import SearchUsersQuery from './search-users.query';
+import {SearchUsersQuery} from './search-users.query';
 import FriendWithRelationResponse from '../user-profile-page/FriendWithRelationResponse';
 
 @Component({
@@ -20,8 +20,8 @@ export class SearchUsersComponent implements OnInit, OnDestroy {
   lastName = new FormControl('');
 
   constructor(@Inject(USERS_PAGINATOR) public paginatorRef: PaginatorPlugin<SearchUsersState>,
-              protected searchUsersService: SearchUsersService,
-              protected searchUsersQuery: SearchUsersQuery) {}
+              public searchUsersService: SearchUsersService,
+              public searchUsersQuery: SearchUsersQuery) {}
 
   ngOnInit() {
     const nameFilter = this.name.valueChanges.pipe(startWith(''));

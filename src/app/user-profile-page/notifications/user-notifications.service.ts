@@ -4,6 +4,7 @@ import {UserNotificationsStore} from './user-notifications.store';
 import {map} from 'rxjs/operators';
 import {plainToClass} from 'class-transformer';
 import FriendResponse from '../FriendResponse';
+import UserProfilePersonalResponse from '../UserProfilePersonalResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,8 @@ export class UserNotificationsService {
   fetchNotifications() {
     this.userService.getUserProfile()
       .pipe(
-        map((userProfile): FriendResponse[] => userProfile.friendRequests.map(data => plainToClass(FriendResponse, data)))
+        map((userProfile): FriendResponse[] => (userProfile as UserProfilePersonalResponse)
+          .friendRequests.map(data => plainToClass(FriendResponse, data)))
       )
       .subscribe(data => {
         this.notificationsStore.add(data);

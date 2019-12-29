@@ -16,7 +16,7 @@ export class SignInComponent implements OnInit {
   error$: Observable<HttpErrorResponse>;
 
   constructor(private sessionService: SessionService,
-              private sessionQuery: SessionQuery) { }
+              public sessionQuery: SessionQuery) { }
 
   ngOnInit() {
     this.model = new SignInBody('', '');
