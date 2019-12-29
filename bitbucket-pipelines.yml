@@ -1,25 +1,8 @@
 pipelines:
   branches:
-    setup-ci-cd:
-#      - step:
-#          name: Unit test
-#          image: node:10.15.3
-#          caches:
-#            - node
-#          script:
-#            - npm install
-#            - npm run test
-#      - step:
-#          name: Integration test
-#          image: node:10.15.3
-#          caches:
-#            - node
-#          script:
-#            - npm run integration-test
-#          services:
-#            - postgres
+    master:
       - step:
-          name: Compile tsc sources
+          name: Build angular project for production
           image: node:10.15.3
           caches:
             - node
