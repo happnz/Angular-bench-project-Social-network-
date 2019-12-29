@@ -22,7 +22,7 @@ export class ErrorService {
     } else if (err.status === 404) {
       this.notificationService.showError(err.status + ' ' + err.error);
       this.router.navigate(['/']);
-    } else if (err.status >= 400) {
+    } else if (err.status >= 400 && typeof err.error === 'string') {
       this.notificationService.showError('Error: ' + err.error);
     }
   }
