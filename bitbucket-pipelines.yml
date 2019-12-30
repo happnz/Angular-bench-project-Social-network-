@@ -7,14 +7,14 @@ pipelines:
           caches:
             - node
           script:
-            - ng test
+            - npm install
+            - npm run test
       - step:
           name: Build angular project for production
           image: node:10.15.3
           caches:
             - node
           script:
-            - npm install
             - npm run build-prod
             - cp deploy/* dist
             - tar czf application.tgz dist
