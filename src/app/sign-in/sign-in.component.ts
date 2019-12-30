@@ -26,6 +26,7 @@ export class SignInComponent implements OnInit {
   }
 
   onSubmit() {
-    this.sessionService.signIn(this.model);
+    this.sessionService.signIn(this.model)
+      .subscribe();
   }
 }

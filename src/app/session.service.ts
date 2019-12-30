@@ -6,6 +6,8 @@ import {User} from './user';
 import {Router} from '@angular/router';
 import {UserService} from './user.service';
 import {createInitialState} from './state/session/session.state';
+import {tap} from 'rxjs/operators';
+import {Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -32,35 +34,40 @@ export class SessionService {
               private http: HttpClient,
               private router: Router) { }
 
-  signIn(signInBody: SignInBody) {
+  signIn(signInBody: SignInBody): Observable<User> {
     this.sessionStore.setLoading(true);
-    this.http.post<User>(`${this.apiUrl}/sign-in`, signInBody)
-      .subscribe(_ => {
-        this.userService.getUserProfile().subscribe(
-          this.saveProfileToStateCallback,
-          this.handleErrorCallback
-        );
-      });
+    return this.http.post<User>(`${this.apiUrl}/sign-in`, signInBody)
+      .pipe(
+        tap(_ => {
+            this.userService.getUserProfile().subscribe(
+              this.saveProfileToStateCallback,
+              this.handleErrorCallback
+            );
+          },
+          this.handleErrorCallback)
+      );
   }
 
-  signUp(signUpBody: User) {
+  signUp(signUpBody: User): Observable<User> {
     this.sessionStore.setLoading(true);
-    this.http.post<User>(`${this.apiUrl}/sign-up`, signUpBody)
-      .subscribe(_ => {
-        this.userService.getUserProfile().subscribe(
-          this.saveProfileToStateCallback,
-          this.handleErrorCallback
-        );
-      });
+    return this.http.post<User>(`${this.apiUrl}/sign-up`, signUpBody)
+      .pipe(
+        tap(_ => {
+            this.userService.getUserProfile().subscribe(
+              this.saveProfileToStateCallback,
+              this.handleErrorCallback
+            );
+          },
+          this.handleErrorCallback)
+      );
   }
 
-  signOut() {
+  signOut(): Observable<any> {
     this.sessionStore.setLoading(true);
-    this.http.post(`${this.apiUrl}/sign-out`, null)
-      .subscribe();
-    this.sessionStore.update(createInitialState());
+    this.clearState();
     this.router.navigateByUrl('/sign-in');
     this.sessionStore.setLoading(false);
+    return this.http.post(`${this.apiUrl}/sign-out`, null);
   }
 
   clearState() {

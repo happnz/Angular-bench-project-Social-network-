@@ -2,6 +2,13 @@ pipelines:
   branches:
     master:
       - step:
+          name: Unit test
+          image: node:10.15.3
+          caches:
+            - node
+          script:
+            - ng test
+      - step:
           name: Build angular project for production
           image: node:10.15.3
           caches:

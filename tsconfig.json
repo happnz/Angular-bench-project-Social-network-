@@ -17,7 +17,9 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "esModuleInterop": true,
+    "types": ["jest"]
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,

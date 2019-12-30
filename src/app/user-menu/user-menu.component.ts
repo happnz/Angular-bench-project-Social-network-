@@ -29,6 +29,7 @@ export class UserMenuComponent implements OnInit, OnDestroy {
   }
 
   signOut() {
-    this.sessionService.signOut();
+    this.sessionService.signOut()
+      .subscribe();
   }
 }

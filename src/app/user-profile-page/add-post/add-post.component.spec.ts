@@ -13,7 +13,9 @@ describe('AddPostComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ AddPostComponent ],
-      providers: [{ provide: UserService, useValue: new UserService(null)}],
+      providers: [{ provide: UserService, useValue: {
+          addPost: jest.fn().mockReturnValue(of({}))
+      }}],
       imports: [FormsModule, ReactiveFormsModule]
     })
     .compileComponents();
@@ -24,7 +26,6 @@ describe('AddPostComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
     userService = TestBed.get(UserService);
-    spyOn(userService, 'addPost').and.returnValue(of({}));
   });
 
   it('should create', () => {

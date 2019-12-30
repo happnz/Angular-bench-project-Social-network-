@@ -9,18 +9,18 @@ describe('NewsComponent', () => {
   let component: NewsComponent;
   let fixture: ComponentFixture<NewsComponent>;
   let userService: UserService;
-  let getNewsSpy: jasmine.Spy;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [ NewsComponent ],
-      providers: [ { provide: UserService, useValue: new UserService(null) }],
+      providers: [ { provide: UserService, useValue: {
+        getNews: jest.fn().mockReturnValue(of([]))
+      } }],
       schemas: [ NO_ERRORS_SCHEMA ]
     })
     .compileComponents();
 
     userService = TestBed.get(UserService);
-    getNewsSpy = spyOn(userService, 'getNews').and.returnValue(of([]));
   });
 
   beforeEach(() => {
