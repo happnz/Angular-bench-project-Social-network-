@@ -1,3 +1,5 @@
+@import "../../assets/scss/base/mixins";
+
 $light-background-color: rgb(245, 245, 245);
 
 .user-profile-main {
@@ -8,8 +10,7 @@ $light-background-color: rgb(245, 245, 245);
 }
 
 ul.user-posts-list, ul.user-profile-friends-preview-list {
-  list-style: none;
-  padding-inline-start: 0;
+  @include reset-list;
 }
 
 .user-profile-posts-header {
