@@ -24,7 +24,8 @@ describe('UserPostComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ UserPostComponent, CustomDatePipe ],
-      providers: [{ provide: UserService, useValue: new UserService(null)}, CustomDatePipe ],
+      providers: [{ provide: UserService, useValue: {}},
+        CustomDatePipe ],
       imports: [ RouterTestingModule ]
     })
     .compileComponents();
@@ -44,7 +45,7 @@ describe('UserPostComponent', () => {
   });
 
   it('should not show delete icon if isPersonal is false', () => {
-    spyOn(userService, 'deletePost').and.returnValue(of(null));
+    userService.deletePost = jest.fn().mockReturnValueOnce(of(null));
     component.isPersonal = false;
     fixture.detectChanges();
     const elem: HTMLElement = fixture.nativeElement;
@@ -53,8 +54,8 @@ describe('UserPostComponent', () => {
   });
 
   it('should call userService.deletePost when clicked on delete icon', () => {
-    spyOn(userService, 'deletePost').and.returnValue(of(null));
-    spyOn(window, 'confirm').and.returnValue(true);
+    userService.deletePost = jest.fn().mockReturnValueOnce(of(null));
+    window.confirm = jest.fn().mockReturnValueOnce(true);
     component.isPersonal = true;
     component.id = 1;
     fixture.detectChanges();
