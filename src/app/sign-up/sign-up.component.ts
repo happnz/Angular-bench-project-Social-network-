@@ -22,6 +22,7 @@ export class SignUpComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.sessionService.clearState();
     this.model = new User('', '', '', '');
     this.isLoading$ = this.sessionQuery.selectLoading();
     this.error$ = this.sessionQuery.selectError();
