@@ -19,6 +19,7 @@ export class SignInComponent implements OnInit {
               public sessionQuery: SessionQuery) { }
 
   ngOnInit() {
+    this.sessionService.clearState();
     this.model = new SignInBody('', '');
     this.isLoading$ = this.sessionQuery.selectLoading();
     this.isCompleted$ = this.sessionQuery.isLoggedIn$;

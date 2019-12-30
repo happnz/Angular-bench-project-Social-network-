@@ -72,6 +72,8 @@ export class SessionService {
 
   clearState() {
     this.sessionStore.update(createInitialState());
+    this.sessionStore.setLoading(false);
+    this.sessionStore.setError(null);
   }
 
 }
