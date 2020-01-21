@@ -2,11 +2,6 @@
 @import "base/mixins";
 @import "base/forms";
 
-body {
-  max-width: 70%;
-  margin: auto;
-}
-
 .not-rounded {
   border-radius: 0 !important;
 }
